@@ -2,7 +2,7 @@ package effect;
 
 import combatant.Combatant;
 
-public class StunEffect extends StatusEffect{
+public class StunEffect extends StatusEffect {
     public StunEffect() {
         super(2);
     }
