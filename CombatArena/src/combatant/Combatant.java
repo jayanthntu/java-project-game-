@@ -19,7 +19,8 @@ public abstract class Combatant
     protected int SpecialSkillsCooldown;
 
 
-    public Combatant (String username, int maxHP, int HP, int ATK, int DEF, int SPD) {
+    public Combatant (String username, int maxHP, int HP, int ATK, int DEF, int SPD) 
+    {
         this.name = username;
         this.maxHP = maxHP;
         this.HP = HP;
@@ -32,8 +33,10 @@ public abstract class Combatant
         this.SpecialSkillsCooldown = 0;
     }
 
-    public void takeDamage (int dmg) {
-        if (!isInvulnerable) {
+    public void takeDamage (int dmg) 
+    {
+        if (!isInvulnerable) 
+        {
             HP -= dmg;
             if (HP < 0)
             {
@@ -42,31 +45,42 @@ public abstract class Combatant
         }
     }
 
-    public boolean isDefeated() {
+    public boolean isDefeated() 
+    {
         return (this.HP <= 0);
     }
 
-    public void setStunned(boolean stun) {
-        if (stun) {
+    public void setStunned(boolean stun) 
+    {
+        if (stun)
+        {
             this.isStunned = true;
-        } else {
+        } 
+        else 
+        {
             this.isStunned = false;
         }
     }
 
-    public void setInvulnerable(boolean invulnerable) {
-        if (invulnerable) {
+    public void setInvulnerable(boolean invulnerable) 
+    {
+        if (invulnerable) 
+        {
             this.isInvulnerable = true;
-        } else {
+        } 
+        else 
+        {
             this.isInvulnerable = false;
         }
     }
 
-    public boolean isInvulnerable() {
+    public boolean isInvulnerable() 
+    {
         return isInvulnerable;
     }
 
-    public void heal(int amount) {
+    public void heal(int amount) 
+    {
         this.HP += amount;
         if (this.HP > this.maxHP)
         {
@@ -74,72 +88,91 @@ public abstract class Combatant
         }
     }
 
-    public void increaseDefense(int amount) {
+    public void increaseDefense(int amount) 
+    {
         this.DEF += amount;
     }
 
-    public void increaseAttack(int amount) {
+    public void increaseAttack(int amount) 
+    {
         this.ATK += amount;
     }
 
-    public String getName() {
+    public String getName() 
+    {
         return this.name;
     }
 
-    public int getHP() {
+    public int getHP() 
+    {
         return this.HP;
     }
 
-    public int getMaxHP() {
+    public int getMaxHP() 
+    {
         return this.maxHP;
     }
 
-    public int getAttack() {
+    public int getAttack() 
+    {
         return this.ATK;
     }
 
-    public int getDefense() {
+    public int getDefense() 
+    {
         return this.DEF;
     }
 
-    public int getSpecialCooldown() {
+    public int getSpecialCooldown() 
+    {
         return this.SpecialSkillsCooldown;
     }
 
-    public void setSpecialCooldown(int cooldown) {
+    public void setSpecialCooldown(int cooldown) 
+    {
         this.SpecialSkillsCooldown = cooldown;
     }
 
-    public void decrementSpecialCooldown() {
+    public void decrementSpecialCooldown() 
+    {
         this.SpecialSkillsCooldown -= 1;
     }
 
-    public List<StatusEffect> getStatusEffect() {
+    public List<StatusEffect> getStatusEffect() 
+    {
         return this.StatusEffect;
     }
 
-    public void addStatusEffect(StatusEffect effect) {
+    public void addStatusEffect(StatusEffect effect) 
+    {
         this.StatusEffect.add(effect);
         effect.apply(this);
     }
 
-    public void removeStatusEffect(StatusEffect effect) {
+    public void removeStatusEffect(StatusEffect effect) 
+    {
         effect.remove(this);
     }
 
-    public int getSpeed() {
+    public int getSpeed() 
+    {
         return this.SPD;
     }
 
-    public boolean isStunned() {
+    public boolean isStunned() 
+    {
         return this.isStunned;
     }
 
-    public void tickStatusEffects() {
-        for (StatusEffect effect : StatusEffect) {
-            if (effect.isActive()) {
+    public void tickStatusEffects() 
+    {
+        for (StatusEffect effect : StatusEffect) 
+        {
+            if (effect.isActive()) 
+            {
                 effect.decrementDuration();
-                if (effect.getDuration() <= 0) {
+                if (effect.getDuration() <= 0) 
+                {
                     effect.setActive(false);
                     removeStatusEffect(effect);
                 }
