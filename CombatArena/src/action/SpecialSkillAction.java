@@ -12,8 +12,7 @@ public class SpecialSkillAction implements Action {
             Player player = (Player) actor;
 
             if (player.getSpecialCooldown() > 0) {
-                System.out.println("Special skill on cooldown! "
-                        + player.getSpecialCooldown() + " turns remaining.");
+                System.out.println("Special skill on cooldown! " + player.getSpecialCooldown() + " turns remaining.");
                 return;
             }
 
