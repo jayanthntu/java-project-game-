@@ -1,3 +1,3 @@
 public interface Action {
-    void execute(Combatant user, Combatant target)
+    void execute(Combatant user, Combatant target);
 }
