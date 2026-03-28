@@ -1,4 +1,5 @@
 public class SpecialSkill implements Action {
+    @Override
     public void execute(Combatant attacker, Combatant target) {
         // Check if skill is available
         if (attacker.getSpecialCooldown() > 0)
