@@ -20,7 +20,7 @@ public class ArcaneBlast implements Action {
                 defeated++;
             }
         }
-        if (deafeated > 0) {
+        if (defeated > 0) {
             user.setAttack(user.getAttack() + (defeated * 10));
         }
     }
