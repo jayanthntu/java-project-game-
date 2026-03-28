@@ -17,4 +17,9 @@ public class DefendEffect extends StatusEffect {
         // Returns original amount after effect expires
         target.setDefense(target.getDefense() - this.amount);
     }
+
+    @Override
+    public String getName() {
+        return "Defend effect";
+    }
 }
