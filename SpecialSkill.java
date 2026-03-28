@@ -1,5 +1,5 @@
 public interface SpecialSkill implements Action {
-    void execute(Combatant performer, Combatant target);
+    void execute(Combatant attacker, Combatant target);
     // Check if skill is available
     if (performer.getSpecialCooldown() > 0) {
         return;
