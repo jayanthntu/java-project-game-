@@ -6,3 +6,4 @@ public class ShieldBash implements Action {
         target.addStatusEffect(new StunEffect(2));
         performer.setSpecialSkillCooldown(3);
     }
+}
