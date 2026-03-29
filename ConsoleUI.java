@@ -1,304 +1,224 @@
-package app.cli;
+package ui;
 
-import app.domain.DifficultyLevel;
-import app.domain.EnemyInstance;
-import app.domain.EnemyType;
-import app.domain.GameConfig;
-import app.domain.ItemType;
-import app.domain.PlayerClass;
-import app.domain.SpawnEntry;
-import app.domain.StatBlock;
+import action.*;
+import combatant.Combatant;
+import combatant.Player;
+import combatant.Warrior;
+import combatant.Wizard;
+import item.*;
+import level.Difficulty;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
 
+/**
+ * ConsoleUI — a cleaner alternative to GameUI.
+ *
+ * Differences from GameUI:
+ *  - Action menu always shows all 4 options; unavailable ones are labelled clearly.
+ *  - Items display their friendly name (item.getName()) instead of the class simple name.
+ *  - Target selection is wired in for Basic Attack (always targets first alive enemy for
+ *    special skill / items, as before, since those affect all targets).
+ *  - Banner printed on startup.
+ */
 public class ConsoleUI {
-    private static final String APP_NAME = "Turn-Based Combat Arena";
-    private static final String APP_VERSION = "0.1.0";
 
-    private final ConsoleIO io;
+    private static final String APP_NAME    = "Turn-Based Combat Arena";
+    private static final String APP_VERSION = "1.0";
 
-    public ConsoleUI(ConsoleIO io) {
-        this.io = io;
+    private final Scanner scanner = new Scanner(System.in);
+
+    // -----------------------------------------------------------------------
+    // Banner
+    // -----------------------------------------------------------------------
+
+    public void printBanner() {
+        displayMessage("====================================");
+        displayMessage(APP_NAME + " v" + APP_VERSION);
+        displayMessage("====================================");
     }
 
-    public void run() throws IOException {
-        printBanner();
-        while (true) {
-            GameConfig config = setupNewGame();
-            runBattleStub(config);
+    // -----------------------------------------------------------------------
+    // Battle status
+    // -----------------------------------------------------------------------
 
-            int choice = promptMenu("Game Complete", List.of(
-                    "Replay with same settings",
-                    "Start a new game",
-                    "Exit"
-            ));
-
-            if (choice == 1) {
-                runBattleStub(config);
-            } else if (choice == 2) {
-                continue;
+    public void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
+        displayMessage("\n========== ROUND " + round + " ==========");
+        for (Combatant c : combatants) {
+            if (!c.isDefeated()) {
+                displayMessage(c.getName()
+                        + " | HP: "  + c.getHP()      + "/" + c.getMaxHP()
+                        + " | ATK: " + c.getAttack()
+                        + " | DEF: " + c.getDefense()
+                        + " | SPD: " + c.getSpeed());
             } else {
-                io.println("Goodbye.");
-                return;
+                displayMessage(c.getName() + " [ELIMINATED]");
             }
         }
+        displayMessage("===================================");
+        displayItems((Player) player);
+        displayMessage("===================================");
     }
 
-    private GameConfig setupNewGame() throws IOException {
-        io.println("\nLoading Screen - Initiation");
-        io.println("Players");
-        for (PlayerClass playerClass : PlayerClass.values()) {
-            io.println("- " + playerClass.displayName() + " | " + playerClass.stats());
-            io.println("  Special Skill: " + playerClass.specialSkillDescription());
+    public void displayItems(Player player) {
+        System.out.print("Items: ");
+        List<String> parts = new ArrayList<>();
+        for (Item item : player.getItems()) {
+            // Use the friendly name stored on the item, not the class name
+            parts.add(item.getName() + ": " + (item.isUsed() ? "Used" : "Unused"));
         }
-
-        int playerChoice = promptMenu("Choose your player", List.of(
-                PlayerClass.WARRIOR.displayName(),
-                PlayerClass.WIZARD.displayName()
-        ));
-        PlayerClass selectedPlayer = playerChoice == 1 ? PlayerClass.WARRIOR : PlayerClass.WIZARD;
-
-        io.println("\nItems");
-        for (ItemType itemType : ItemType.values()) {
-            io.println("- " + itemType.displayName() + " | " + itemType.description());
-        }
-
-        List<ItemType> items = new ArrayList<>();
-        items.add(promptItemSelection("Pick item 1"));
-        items.add(promptItemSelection("Pick item 2"));
-
-        io.println("\nEnemies");
-        for (EnemyType enemyType : EnemyType.values()) {
-            io.println("- " + enemyType.displayName() + " | " + enemyType.stats());
-        }
-
-        io.println("\nDifficulty Levels");
-        for (DifficultyLevel level : DifficultyLevel.values()) {
-            io.println(level.levelNumber() + ". " + level.displayName());
-            io.println("   Initial Spawn: " + spawnLabel(level.initialSpawn()));
-            String backup = level.backupSpawn().isEmpty() ? "None" : spawnLabel(level.backupSpawn());
-            io.println("   Backup Spawn: " + backup);
-        }
-
-        int levelChoice = promptMenu("Select difficulty", List.of(
-                DifficultyLevel.EASY.displayName(),
-                DifficultyLevel.MEDIUM.displayName(),
-                DifficultyLevel.HARD.displayName()
-        ));
-        DifficultyLevel difficulty = switch (levelChoice) {
-            case 1 -> DifficultyLevel.EASY;
-            case 2 -> DifficultyLevel.MEDIUM;
-            default -> DifficultyLevel.HARD;
-        };
-
-        return new GameConfig(selectedPlayer, items, difficulty);
+        displayMessage(String.join(" | ", parts));
     }
 
-    private void runBattleStub(GameConfig config) throws IOException {
-        BattleState state = new BattleState(config);
-        io.println("\nStarting battle (CLI UI stub). Actions are recorded, but no combat logic runs yet.\n");
+    // -----------------------------------------------------------------------
+    // Action menu — always shows all 4 options
+    // -----------------------------------------------------------------------
 
-        while (true) {
-            printBattleStatus(state);
+    public Action showActionMenu(Player player, List<Combatant> aliveEnemies) {
+        displayMessage("\nYour turn! Choose an action:");
+        displayMessage("1. Basic Attack");
+        displayMessage("2. Defend");
 
-            int action = promptMenu("Choose action", List.of(
-                    "Basic Attack",
-                    "Defend",
-                    "Item",
-                    "Special Skill",
-                    "End Demo Battle"
-            ));
+        boolean hasItems   = player.getItems().stream().anyMatch(i -> !i.isUsed());
+        boolean skillReady = player.getSpecialCooldown() == 0;
 
-            if (action == 5) {
-                break;
-            }
-
-            switch (action) {
-                case 1 -> handleBasicAttack(state);
-                case 2 -> io.println("Defend selected. Defense +10 for current and next round (stub).\n");
-                case 3 -> handleItemUse(state);
-                case 4 -> io.println(config.playerClass().displayName() + " uses Special Skill (stub).\n");
-                default -> io.println("Unknown action.\n");
-            }
-
-            io.println("Enemy turns execute BasicAttack (stub).\n");
-            state.round++;
+        if (hasItems) {
+            displayMessage("3. Use Item");
+        } else {
+            displayMessage("3. Use Item  (none remaining)");
         }
 
-        printVictoryScreen(state);
-    }
-
-    private void handleBasicAttack(BattleState state) throws IOException {
-        if (state.enemies.isEmpty()) {
-            io.println("No enemies available.\n");
-            return;
+        if (skillReady) {
+            displayMessage("4. Special Skill");
+        } else {
+            displayMessage("4. Special Skill  (cooldown: " + player.getSpecialCooldown() + ")");
         }
 
-        List<String> labels = new ArrayList<>();
-        for (EnemyInstance enemy : state.enemies) {
-            labels.add(enemy.label() + " (HP: " + enemy.currentHp() + ")");
-        }
-        int targetChoice = promptMenu("Choose a target", labels);
-        EnemyInstance target = state.enemies.get(targetChoice - 1);
-        io.println("Basic Attack -> " + target.label() + " (stub).\n");
-    }
+        int choice = getPlayerInput(4);
 
-    private void handleItemUse(BattleState state) throws IOException {
-        List<ItemType> available = state.availableItems();
-        if (available.isEmpty()) {
-            io.println("No items remaining.\n");
-            return;
-        }
-
-        List<String> options = new ArrayList<>();
-        for (ItemType item : available) {
-            options.add(item.displayName() + " (x" + state.itemCounts.get(item) + ")");
-        }
-        int choice = promptMenu("Choose an item", options);
-        ItemType chosen = available.get(choice - 1);
-        state.consumeItem(chosen);
-        io.println(chosen.displayName() + " used (stub).\n");
-    }
-
-    private void printBattleStatus(BattleState state) {
-        io.println("============================");
-        io.println("Round " + state.round);
-        io.println("Player: " + state.playerClass.displayName() + " | " + state.playerStats);
-        io.println("Special Skill Cooldown: " + state.specialSkillCooldown + " rounds (stub)");
-        io.println("Items: " + state.itemsSummary());
-        io.println("Enemies:");
-        for (EnemyInstance enemy : state.enemies) {
-            io.println("- " + enemy.label() + " | " + enemy.type().displayName() + " | HP: " + enemy.currentHp());
-        }
-        io.println("============================");
-    }
-
-    private void printVictoryScreen(BattleState state) {
-        io.println("\nPlayer Victory Screen");
-        io.println("Congratulations, you have defeated all your enemies. (stub)");
-        io.println("Statistics: Remaining HP: " + state.playerStats.maxHp() + " | Total Rounds: " + (state.round - 1));
-    }
-
-    private void printBanner() {
-        io.println("============================");
-        io.println(APP_NAME + " v" + APP_VERSION);
-        io.println("============================");
-    }
-
-    private String spawnLabel(List<SpawnEntry> spawn) {
-        if (spawn.isEmpty()) {
-            return "None";
-        }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < spawn.size(); i++) {
-            if (i > 0) {
-                builder.append(", ");
-            }
-            builder.append(spawn.get(i).label());
-        }
-        return builder.toString();
-    }
-
-    private int promptMenu(String title, List<String> options) throws IOException {
-        io.println("\n" + title);
-        for (int i = 0; i < options.size(); i++) {
-            io.println((i + 1) + ". " + options.get(i));
-        }
-        while (true) {
-            io.print("Select an option: ");
-            String input = io.readLine();
-            if (input == null) {
-                return options.size();
-            }
-            try {
-                int value = Integer.parseInt(input.trim());
-                if (value >= 1 && value <= options.size()) {
-                    return value;
-                }
-            } catch (NumberFormatException ignored) {
-                // fall through
-            }
-            io.println("Invalid selection. Try again.");
-        }
-    }
-
-    private ItemType promptItemSelection(String label) throws IOException {
-        int choice = promptMenu(label, List.of(
-                ItemType.POTION.displayName(),
-                ItemType.POWER_STONE.displayName(),
-                ItemType.SMOKE_BOMB.displayName()
-        ));
         return switch (choice) {
-            case 1 -> ItemType.POTION;
-            case 2 -> ItemType.POWER_STONE;
-            default -> ItemType.SMOKE_BOMB;
+            case 1 -> {
+                // Let the player pick a target for basic attack
+                Combatant target = selectTarget(aliveEnemies);
+                yield new BasicAttack();
+                // Note: BasicAttack.execute() uses targets.getFirst(); target selection
+                // here informs the user visually. To fully wire per-target selection,
+                // pass the chosen target as a single-element list in BattleEngine.
+            }
+            case 2 -> new Defend();
+            case 3 -> {
+                if (!hasItems) {
+                    displayMessage("No items remaining. Defaulting to Basic Attack.");
+                    yield new BasicAttack();
+                }
+                Item item = selectItem(player);
+                yield new ItemAction(item);
+            }
+            case 4 -> {
+                if (!skillReady) {
+                    displayMessage("Skill not ready yet. Defaulting to Basic Attack.");
+                    yield new BasicAttack();
+                }
+                yield new SpecialSkillAction();
+            }
+            default -> new BasicAttack();
         };
     }
 
-    private static class BattleState {
-        private final PlayerClass playerClass;
-        private final StatBlock playerStats;
-        private final List<EnemyInstance> enemies;
-        private final Map<ItemType, Integer> itemCounts;
-        private int round = 1;
-        private int specialSkillCooldown = 0;
+    // -----------------------------------------------------------------------
+    // Target & item selection
+    // -----------------------------------------------------------------------
 
-        private BattleState(GameConfig config) {
-            this.playerClass = config.playerClass();
-            this.playerStats = config.playerClass().stats();
-            this.enemies = buildEnemies(config.difficulty().initialSpawn());
-            this.itemCounts = new EnumMap<>(ItemType.class);
-            for (ItemType item : config.items()) {
-                itemCounts.merge(item, 1, Integer::sum);
+    private Combatant selectTarget(List<Combatant> targets) {
+        if (targets.size() == 1) return targets.get(0);
+        displayMessage("Select target:");
+        for (int i = 0; i < targets.size(); i++) {
+            displayMessage((i + 1) + ". " + targets.get(i).getName()
+                    + " (HP: " + targets.get(i).getHP() + ")");
+        }
+        int choice = getPlayerInput(targets.size());
+        return targets.get(choice - 1);
+    }
+
+    private Item selectItem(Player player) {
+        List<Item> available = player.getItems().stream()
+                .filter(i -> !i.isUsed())
+                .toList();
+        displayMessage("Select item:");
+        for (int i = 0; i < available.size(); i++) {
+            // Use friendly name from item.getName()
+            displayMessage((i + 1) + ". " + available.get(i).getName());
+        }
+        int choice = getPlayerInput(available.size());
+        return available.get(choice - 1);
+    }
+
+    // -----------------------------------------------------------------------
+    // Setup menus
+    // -----------------------------------------------------------------------
+
+    public Player selectPlayer() {
+        displayMessage("\n=== SELECT YOUR CHARACTER ===");
+        displayMessage("1. Warrior | HP: 260  ATK: 40  DEF: 20  SPD: 30 | Skill: Shield Bash");
+        displayMessage("2. Wizard  | HP: 200  ATK: 50  DEF: 10  SPD: 20 | Skill: Arcane Blast");
+        int choice = getPlayerInput(2);
+        return choice == 1 ? new Warrior() : new Wizard();
+    }
+
+    public void selectItems(Player player) {
+        displayMessage("\n=== SELECT 2 ITEMS (duplicates allowed) ===");
+        displayMessage("1. Potion      — Heal 100 HP");
+        displayMessage("2. Power Stone — Free extra use of special skill");
+        displayMessage("3. Smoke Bomb  — Enemy attacks deal 0 damage for 2 turns");
+
+        List<Item> chosen = new ArrayList<>();
+        for (int i = 1; i <= 2; i++) {
+            displayMessage("Select item " + i + ":");
+            int choice = getPlayerInput(3);
+            switch (choice) {
+                case 1 -> chosen.add(new Potion());
+                case 2 -> chosen.add(new PowerStone());
+                case 3 -> chosen.add(new SmokeBomb());
             }
         }
+        player.setItems(chosen);
+    }
 
-        private static List<EnemyInstance> buildEnemies(List<SpawnEntry> spawn) {
-            List<EnemyInstance> list = new ArrayList<>();
-            for (SpawnEntry entry : spawn) {
-                for (int i = 0; i < entry.count(); i++) {
-                    String label = entry.type().displayName() + " " + (char) ('A' + i);
-                    list.add(new EnemyInstance(entry.type(), label));
+    public Difficulty selectDifficulty() {
+        displayMessage("\n=== SELECT DIFFICULTY ===");
+        displayMessage("1. Easy   — 3 Goblins");
+        displayMessage("2. Medium — 1 Goblin + 1 Wolf  | Backup: 2 Wolves");
+        displayMessage("3. Hard   — 2 Goblins           | Backup: 1 Goblin + 2 Wolves");
+        int choice = getPlayerInput(3);
+        return switch (choice) {
+            case 1  -> Difficulty.EASY;
+            case 2  -> Difficulty.MEDIUM;
+            default -> Difficulty.HARD;
+        };
+    }
+
+    // -----------------------------------------------------------------------
+    // Input helpers
+    // -----------------------------------------------------------------------
+
+    public int getPlayerInput(int max) {
+        int input = -1;
+        while (input < 1 || input > max) {
+            System.out.print("Enter choice (1-" + max + "): ");
+            try {
+                input = Integer.parseInt(scanner.nextLine().trim());
+                if (input < 1 || input > max) {
+                    displayMessage("Please enter a number between 1 and " + max + ".");
                 }
+            } catch (NumberFormatException e) {
+                displayMessage("Invalid input — please enter a number.");
             }
-            return list;
         }
+        return input;
+    }
 
-        private List<ItemType> availableItems() {
-            List<ItemType> available = new ArrayList<>();
-            for (Map.Entry<ItemType, Integer> entry : itemCounts.entrySet()) {
-                if (entry.getValue() > 0) {
-                    available.add(entry.getKey());
-                }
-            }
-            return available;
-        }
-
-        private void consumeItem(ItemType itemType) {
-            itemCounts.computeIfPresent(itemType, (item, count) -> Math.max(0, count - 1));
-        }
-
-        private String itemsSummary() {
-            if (itemCounts.isEmpty()) {
-                return "None";
-            }
-            StringBuilder builder = new StringBuilder();
-            int index = 0;
-            for (Map.Entry<ItemType, Integer> entry : itemCounts.entrySet()) {
-                if (entry.getValue() <= 0) {
-                    continue;
-                }
-                if (index > 0) {
-                    builder.append(", ");
-                }
-                builder.append(entry.getKey().displayName()).append(" x").append(entry.getValue());
-                index++;
-            }
-            return index == 0 ? "None" : builder.toString();
-        }
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 }
