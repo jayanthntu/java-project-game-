@@ -5,7 +5,9 @@ import combatant.Combatant;
 public class DefendEffect extends StatusEffect {
     private static final int DEFENSE_BONUS = 10;
 
-    public DefendEffect(int duration) { super(duration); }
+    public DefendEffect(int duration) {
+        super(duration);
+    }
 
     @Override
     public void apply(Combatant target) {
