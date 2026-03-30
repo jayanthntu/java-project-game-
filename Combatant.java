@@ -18,6 +18,20 @@ public abstract class Combatant
         this.SPD = SPD;
     }
 
+    public int getSpecialSkillCooldown() {
+        return setSpecialSkillCooldown;
+    }
+
+    public void getSpecialSkillCooldown(int rounds) {
+        this.SpecialSkillCooldown = rounds;
+    }
+    
+    public void updateCooldown() {
+        if (SpecialSkillCooldown > 0) {
+            SpecialSkillCooldown--;
+        }
+    }
+   
     public void takeDamage (int dmg)
     {
         this.HP = this.HP - dmg;
