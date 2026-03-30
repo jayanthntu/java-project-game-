@@ -1,5 +1,8 @@
 package action;
 
+import combatant.Combatant;
+import java.util.List;
+
 public interface Action {
-    void execute(Combatant user, Combatant target);
+    void execute(Combatant user, List<Combatant> targets);
 }

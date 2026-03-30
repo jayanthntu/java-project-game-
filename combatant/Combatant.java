@@ -1,57 +1,115 @@
 package combatant;
 
+import effect.StatusEffect;
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Combatant
 {
-    protected String name;
-    protected int maxHP;
-    protected int HP;
-    protected int ATK;
-    protected int DEF;
-    protected int SPD;
-    protected boolean invulnerable;
-    protected List<StatusEffect> StatusEffect;
+    private String name;
+    private int maxHP;
+    private int HP;
+    private int ATK;
+    private int DEF;
+    private int SPD;
+    private List<StatusEffect> statusEffect;
+    private boolean stunned;
+    private boolean invulnerable;
+    private int specialSkillsCooldown;
 
-    public int getAttack() {
-        return ATK;
-    }
-
-    public int getDefense() {
-        return DEF;
-    }
-
-    public void setAttack(int atk) {
-        ATK = atk;
-    }
-
-    public void setDefense(int def) {
-        DEF = def;
-    }
-
-    public Combatant (String username, int maxHP, int HP, int ATK, int DEF, int SPD)
-    {
+    public Combatant(String username, int maxHP, int HP, int ATK, int DEF, int SPD) {
         this.name = username;
         this.maxHP = maxHP;
         this.HP = HP;
         this.ATK = ATK;
         this.DEF = DEF;
         this.SPD = SPD;
+        this.statusEffect = new ArrayList<>();
+        this.stunned = false;
+        this.invulnerable = false;
+        this.specialSkillsCooldown = 0;
     }
 
-    public void setInvulnerable() {
-        this.invulnerable = true;
+    public String getName() { return name; }
+
+    public int getHP() { return this.HP; }
+
+    public int getMaxHP() { return this.maxHP; }
+
+    public int getAttack() {
+        return ATK;
     }
+
+    public void increaseAttack(int atk) {
+        ATK += atk;
+    }
+
+    public int getDefense() {
+        return DEF;
+    }
+
+    public void increaseDefense(int def) {
+        DEF += def;
+    }
+
+    public boolean isInvulnerable() { return invulnerable; }
+
+    public void setInvulnerable(boolean invulnerable) {
+        this.invulnerable = invulnerable;
+    }
+
+    public boolean isStunned() { return stunned; }
+
+    public void setStunned(boolean stun) { this.stunned = stun; }
+
+    public int getSpecialSkillsCooldown() { return specialSkillsCooldown; }
+
+    public void setSpecialSkillsCooldown(int cooldown) { specialSkillsCooldown = cooldown; }
+
+    public void decrementSpecialSkillsCooldown() { specialSkillsCooldown -= 1; }
 
     public void takeDamage(int dmg) {
-        if (this.invulnerable) {
-            return;
-        }
-        else {
-            HP = max(this.HP - dmg, 0);
+        if (!invulnerable) {
+            HP -= dmg;
+            if (HP < 0) {
+                HP = 0;
+            }
         }
     }
-   
-    public boolean isDefeated()
-    {
-        return (this.HP <= 0); 
+
+    public boolean isDefeated() { return HP <= 0; }
+
+    public void heal(int amount) {
+        HP += amount;
+        if (HP > maxHP) {
+            HP = maxHP;
+        }
+    }
+
+    public List<StatusEffect> getStatusEffect() { return statusEffect; }
+
+    public void addStatusEffect(StatusEffect effect) {
+        statusEffect.add(effect);
+        effect.apply(this);
+    }
+
+    public void removeStatusEffect(StatusEffect effect) {
+        effect.remove(this);
+    }
+
+    public int getSpeed() {
+        return this.SPD;
+    }
+
+    public void tickStatusEffects() {
+        for (StatusEffect effect : statusEffect) {
+            if (effect.isActive()) {
+                effect.decrementDuration();
+                if (effect.getDuration() <= 0) {
+                    effect.setActive(false);
+                    removeStatusEffect(effect);
+                }
+            }
+        }
     }
 }

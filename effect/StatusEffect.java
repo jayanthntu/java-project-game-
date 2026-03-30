@@ -1,5 +1,7 @@
 package effect;
 
+import combatant.Combatant;
+
 public abstract class StatusEffect {
     protected int duration;
 
