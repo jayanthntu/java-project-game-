@@ -13,7 +13,7 @@ public class ArcaneBlast implements Action {
             if (!enemy.isAlive()) {
                 continue;
             }
-            int dmg = Math.max(0, user.getAttack() - enemy.getDefense());
+            int dmg = user.getAttack() - enemy.getDefense();
             enemy.takeDamage(dmg);
 
             if(!enemy.isAlive()) {
