@@ -1,22 +1,19 @@
 import java.util.Scanner;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Player extends Combatant
 {
-    private Item[] items;
+    private List<Item> items;
     private int specialSkillCooldown;
-    private static final int MAX_ITEMS = 10;
-    private List<Enemy> enemies;
 
     Scanner scan = new Scanner(System.in);
 
     public Player(String name, int maxHP, int HP, int ATK, int DEF, int SPD)
     {
         super(name, maxHP, HP, ATK, DEF, SPD);
-
-        // capping the number of items a player can hold to 10
-        items = new Item[MAX_ITEMS];
-        specialCooldown = 0;
+        items = new ArrayList<>();
+        specialSkillCooldown = 0;
     }
 
     public void chooseAction()
@@ -63,8 +60,16 @@ public abstract class Player extends Combatant
         return specialSkillCooldown;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public void setSpecialSkillCooldown(int rounds) {
         this.specialSkillCooldown = rounds;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
     
     public void updateCooldown() {
