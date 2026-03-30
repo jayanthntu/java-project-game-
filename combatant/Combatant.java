@@ -44,6 +44,8 @@ public abstract class Combatant
         ATK += atk;
     }
 
+    public void decreaseAttack(int atk) { ATK -= atk; }
+
     public int getDefense() {
         return DEF;
     }
@@ -51,6 +53,8 @@ public abstract class Combatant
     public void increaseDefense(int def) {
         DEF += def;
     }
+
+    public void decreaseDefense(int def) { DEF -= def; }
 
     public boolean isInvulnerable() { return invulnerable; }
 

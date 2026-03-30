@@ -9,17 +9,18 @@ public abstract class StatusEffect {
         this.duration = duration;
     }
 
-    // When the effect is active
-    public abstract void apply(Combatant target);
-    // When the effect expires
-    public abstract void remove(Combatant target);
-    public abstract String getName();
-
     public void reduceDuration() {
-        this.duration--;
+        duration--;
     }
 
     public boolean isExpired() {
         return duration <= 0;
     }
+
+    // When the effect is active
+    public abstract void apply(Combatant target);
+    // When the effect expires
+    public abstract void remove(Combatant target);
+
+    public abstract String toString();
 }

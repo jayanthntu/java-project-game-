@@ -1,6 +1,7 @@
 package action;
 
 import combatant.Combatant;
+import effect.ArcaneBlastEffect;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public class ArcaneBlast implements Action {
             }
         }
         totalBonusApplied = enemyKilled * ATK_BONUS_PER_KILL;
-        user.increaseAttack(totalBonusApplied);
+        user.addStatusEffect(new ArcaneBlastEffect(totalBonusApplied));
     }
 }

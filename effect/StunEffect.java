@@ -1,5 +1,7 @@
 package effect;
 
+import combatant.Combatant;
+
 public class StunEffect extends StatusEffect {
     public StunEffect(int duration) {
         super(duration);
@@ -16,8 +18,8 @@ public class StunEffect extends StatusEffect {
     }
 
     @Override
-    public String getName() {
-        return "Stun effect";
+    public String toString() {
+        return "Stunned (" + duration + " turns remaining)";
     }
 }
 
