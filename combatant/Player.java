@@ -1,4 +1,4 @@
-lsimport java.util.Scanner;
+import java.util.Scanner;
 import java.util.List;
 
 public abstract class Player extends Combatant
