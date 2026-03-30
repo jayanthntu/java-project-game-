@@ -6,7 +6,24 @@ public abstract class Combatant
     protected int ATK;
     protected int DEF;
     protected int SPD;
+    protected boolean invulnerable;
     protected List<StatusEffect> StatusEffect;
+
+    public int getAttack() {
+        return ATK;
+    }
+
+    public int getDefense() {
+        return DEF;
+    }
+
+    public void setAttack(int atk) {
+        ATK = atk;
+    }
+
+    public void setDefense(int def) {
+        DEF = def;
+    }
 
     public Combatant (String username, int maxHP, int HP, int ATK, int DEF, int SPD)
     {
@@ -19,35 +36,15 @@ public abstract class Combatant
     }
 
     public void setInvulnerable() {
-        this.invulnerable = invulnerable;
+        this.invulnerable = true;
     }
 
     public void takeDamage(int dmg) {
-        if(this.invulnerable) {
+        if (this.invulnerable) {
             return;
         }
-    }
-
-    public void takeDamage (int dmg)
-    {
-        this.HP = this.HP - dmg;
-        if (this.HP < 0)
-        {
-            this.HP = 0;
-        }
-    }
-    
-    public int getSpecialSkillCooldown() {
-        return setSpecialSkillCooldown;
-    }
-
-    public void getSpecialSkillCooldown(int rounds) {
-        this.SpecialSkillCooldown = rounds;
-    }
-    
-    public void updateCooldown() {
-        if (SpecialSkillCooldown > 0) {
-            SpecialSkillCooldown--;
+        else {
+            HP = max(this.HP - dmg, 0);
         }
     }
    
