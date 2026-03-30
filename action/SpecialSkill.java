@@ -1,3 +1,5 @@
+package action;
+
 public class SpecialSkill implements Action {
     @Override
     public void execute(Combatant attacker, Combatant target) {

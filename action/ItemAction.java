@@ -1,3 +1,5 @@
+package action;
+
 public class ItemAction implements Action {
     private Item itemToUse;
 

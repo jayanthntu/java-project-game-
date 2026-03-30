@@ -1,3 +1,5 @@
+package action;
+
 public class ShieldBash implements Action {
     @Override
     public void execute(Combatant attacker, Combatant target) {

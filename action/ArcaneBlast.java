@@ -1,3 +1,5 @@
+package action;
+
 public class ArcaneBlast implements Action {
     private List<Combatant> allEnemies;
 

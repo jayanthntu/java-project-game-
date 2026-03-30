@@ -1,3 +1,5 @@
+package combatant;
+
 public class Warrior extends Player
 {
     Warrior()

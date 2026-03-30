@@ -1,3 +1,5 @@
+package combatant;
+
 public abstract class Combatant
 {
     protected String name;

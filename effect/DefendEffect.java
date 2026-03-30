@@ -1,3 +1,5 @@
+package effect;
+
 public class DefendEffect extends StatusEffect {
     private int amount;
 

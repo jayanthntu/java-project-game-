@@ -1,3 +1,5 @@
+package combatant;
+
 public class Wolf extends Enemy
 {
     Wolf()

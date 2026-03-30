@@ -1,3 +1,5 @@
+package combatant;
+
 public class Goblin extends Enemy
 {
     Goblin()

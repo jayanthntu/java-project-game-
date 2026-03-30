@@ -1,3 +1,5 @@
+package combatant;
+
 public class Wizard extends Player
 {
     Wizard()

@@ -1,3 +1,5 @@
+package effect;
+
 public abstract class StatusEffect {
     protected int duration;
 

@@ -1,3 +1,5 @@
+package effect;
+
 public class SmokeBombEffect extends StatusEffect {
     public SmokeBombEffect(int duration) {
         super(duration);
