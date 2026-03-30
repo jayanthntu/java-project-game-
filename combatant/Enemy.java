@@ -5,7 +5,7 @@ import action.ActionStrategy;
 
 import java.util.List;
 
-abstract class Enemy extends Combatant
+public abstract class Enemy extends Combatant
 {
     public Enemy(String name, int maxHP, int HP, int ATK, int DEF, int SPD)
     {

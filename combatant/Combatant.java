@@ -2,6 +2,7 @@ package combatant;
 
 import effect.StatusEffect;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Combatant
@@ -106,13 +107,13 @@ public abstract class Combatant
     }
 
     public void tickStatusEffects() {
-        for (StatusEffect effect : statusEffect) {
-            if (effect.isActive()) {
-                effect.decrementDuration();
-                if (effect.getDuration() <= 0) {
-                    effect.setActive(false);
-                    removeStatusEffect(effect);
-                }
+        Iterator<StatusEffect> it = statusEffect.iterator();
+        while (it.hasNext()) {
+            StatusEffect current = it.next();
+            current.reduceDuration();
+            if (current.isExpired()) {
+                removeStatusEffect(current);
+                it.remove();
             }
         }
     }

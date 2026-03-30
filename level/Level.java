@@ -32,6 +32,7 @@ public class Level {
     }
 
     public Difficulty getDifficulty() { return difficulty; }
+
     public List<Enemy> getInitialSpawn() { return initialSpawn; }
 
 }
