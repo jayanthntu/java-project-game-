@@ -4,7 +4,7 @@ import java.util.List;
 public abstract class Player extends Combatant
 {
     private Item[] items;
-    private int specialCooldown;
+    private int specialSkillCooldown;
     private static final int MAX_ITEMS = 10;
     private List<Enemy> enemies;
 
@@ -56,6 +56,20 @@ public abstract class Player extends Combatant
             default:
                 System.out.println("Invalid input.");
                 break;
+        }
+    }
+
+    public int getSpecialSkillCooldown() {
+        return specialSkillCooldown;
+    }
+
+    public void setSpecialSkillCooldown(int rounds) {
+        this.specialSkillCooldown = rounds;
+    }
+    
+    public void updateCooldown() {
+        if (specialSkillCooldown > 0) {
+            specialSkillCooldown--;
         }
     }
 }
