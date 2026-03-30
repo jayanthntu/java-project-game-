@@ -18,6 +18,25 @@ public abstract class Combatant
         this.SPD = SPD;
     }
 
+    public void setInvulnerable() {
+        this.invulnerable = invulnerable;
+    }
+
+    public void takeDamage(int dmg) {
+        if(this.invulnerable) {
+            return;
+        }
+    }
+
+    public void takeDamage (int dmg)
+    {
+        this.HP = this.HP - dmg;
+        if (this.HP < 0)
+        {
+            this.HP = 0;
+        }
+    }
+    
     public int getSpecialSkillCooldown() {
         return setSpecialSkillCooldown;
     }
@@ -32,15 +51,6 @@ public abstract class Combatant
         }
     }
    
-    public void takeDamage (int dmg)
-    {
-        this.HP = this.HP - dmg;
-        if (this.HP < 0)
-        {
-            this.HP = 0;
-        }
-    }
-
     public boolean isDefeated()
     {
         return (this.HP <= 0); 
