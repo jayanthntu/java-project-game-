@@ -221,7 +221,7 @@ public class GameUI {
 
     public void selectItems(Player player) {
         System.out.println("\n=== SELECT 2 ITEMS (duplicates allowed) ===");
-        System.out.println("1. Potion     — Heal 100 HP");
+        System.out.println("1. Potion — Heal 100 HP");
         System.out.println("2. Power Stone — Free extra use of special skill");
         System.out.println("3. Smoke Bomb  — Enemy attacks deal 0 damage for 2 turns");
 
@@ -258,7 +258,7 @@ public class GameUI {
         System.out.println("\n=== SELECT DIFFICULTY ===");
         System.out.println("1. Easy   — 3 Goblins");
         System.out.println("2. Medium — 1 Goblin + 1 Wolf | Backup: 2 Wolves");
-        System.out.println("3. Hard   — 2 Goblins          | Backup: 1 Goblin + 2 Wolves");
+        System.out.println("3. Hard   — 2 Goblins | Backup: 1 Goblin + 2 Wolves");
 
         int choice = getPlayerInput(3);
 
