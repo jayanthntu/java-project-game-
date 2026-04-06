@@ -52,7 +52,7 @@ public class GameUI {
         if (hasItems) System.out.println("3. Use Item");
 
         boolean skillReady = player.getSpecialSkillsCooldown() == 0;
-        System.out.println(hasItems ? 4 : 3);
+        System.out.print(hasItems ? 4 : 3);
         System.out.println(". Special Skill (Cooldown: " + player.getSpecialSkillsCooldown() + ")");
 
         int choice = getPlayerInput(hasItems ? 4 : 3);
