@@ -17,6 +17,7 @@ public class Game {
 
     public void start() {
         ui.displayMessage("=== TURN-BASED COMBAT ARENA ===");
+
         player = ui.selectPlayer();
         ui.selectItems(player);
         Difficulty difficulty = ui.selectDifficulty();
@@ -51,6 +52,7 @@ public class Game {
         int choice = ui.getPlayerInput(3);
         switch (choice) {
             case 1 -> {
+                player.heal(player.getMaxHP());
                 engine = new BattleEngine(player, currentLevel, ui);
                 runGame();
             }
