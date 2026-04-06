@@ -7,7 +7,7 @@ import java.util.List;
 public class Wizard extends Player {
     private final Action specialSkill = new ArcaneBlast();
 
-    Wizard()
+    public Wizard()
     {
         super("Wizard", 200, 200, 50, 10, 20);
     }

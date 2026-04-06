@@ -51,8 +51,8 @@ public class GameUI {
         boolean hasItems = player.getItems().stream().anyMatch(i -> !i.isUsed());
         if (hasItems) System.out.println("3. Use Item");
 
-        boolean skillReady = player.getSpecialCooldown() == 0;
-        System.out.println("4. Special Skill (Cooldown: " + player.getSpecialCooldown() + ")");
+        boolean skillReady = player.getSpecialSkillsCooldown() == 0;
+        System.out.println("4. Special Skill (Cooldown: " + player.getSpecialSkillsCooldown() + ")");
 
         int choice = getPlayerInput(hasItems ? 4 : 3);
 
@@ -64,14 +64,35 @@ public class GameUI {
                     Item item = selectItem(player);
                     yield new ItemAction(item);
                 }
-                case 4 -> skillReady ? new SpecialSkillAction() : fallback(player, aliveEnemies);
+                case 4 -> {
+                    if (skillReady) {
+                        if (player instanceof Wizard) {
+                            yield new ArcaneBlast();
+                        } else {
+                            yield new ShieldBash();
+                        }
+                    } else {
+                        yield new BasicAttack(); // fallback if skill isn't ready
+                    }
+                }
+
                 default -> new BasicAttack();
             };
         } else {
             return switch (choice) {
                 case 1 -> new BasicAttack();
                 case 2 -> new Defend();
-                case 3 -> skillReady ? new SpecialSkillAction() : fallback(player, aliveEnemies);
+                case 3 -> {
+                    if (skillReady) {
+                        if (player instanceof Wizard) {
+                            yield new ArcaneBlast();
+                        } else {
+                            yield new ShieldBash();
+                        }
+                    } else {
+                        yield new BasicAttack(); // fallback if skill isn't ready
+                    }
+                }
                 default -> new BasicAttack();
             };
         }

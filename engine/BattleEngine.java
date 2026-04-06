@@ -49,8 +49,8 @@ public class BattleEngine {
                 List<Combatant> aliveEnemies = getAliveEnemies();
                 Action action = ui.showActionMenu(p, aliveEnemies);
                 action.execute(p, aliveEnemies);
-                if (p.getSpecialCooldown() > 0) {
-                    p.decrementSpecialCooldown();
+                if (p.getSpecialSkillsCooldown() > 0) {
+                    p.decrementSpecialSkillsCooldown();
                 }
             } else if (current instanceof Enemy e) {
                 Action action = e.takeTurn(List.of(player));
@@ -77,14 +77,6 @@ public class BattleEngine {
         }
 
 
-    }
-
-    public void applyStatusEffects(Combatant combatant) {
-        for (StatusEffect effect : combatant.getStatusEffect()) {
-            if (effect.isActive()) {
-                effect.apply(combatant);
-            }
-        }
     }
 
     public boolean isOver() {

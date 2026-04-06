@@ -7,7 +7,7 @@ import java.util.List;
 public class Warrior extends Player {
     private final Action specialSkill = new ShieldBash();
 
-    Warrior() { super("Warrior", 260, 260, 40, 20, 30); }
+    public Warrior() { super("Warrior", 260, 260, 40, 20, 30); }
 
     Warrior(String name)
     {
