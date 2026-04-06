@@ -40,7 +40,7 @@ public class BattleEngine {
 
             // Check if stunned (stun skips turn)
             if (current.isStunned()) {
-                ui.displayMessage(current.getName() + " is STUNNED — turn skipped.");
+                ui.displayMessage(current.getName() + " is STUNNED - turn skipped.");
                 current.tickStatusEffects();
                 continue;
             }
