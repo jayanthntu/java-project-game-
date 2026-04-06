@@ -1,25 +1,28 @@
-public class DefendEffect extends StatusEffect {
-    private int amount;
+package effect;
 
-    public DefendEffect(int duration, int amount) {
+import combatant.Combatant;
+
+public class DefendEffect extends StatusEffect {
+    private static final int DEFENSE_BONUS = 10;
+
+    public DefendEffect(int duration) {
         super(duration);
-        this.amount = amount;
     }
 
     @Override
     public void apply(Combatant target) {
         // Different combatants have different defense amount 
-        target.setDefense(target.getDefense() + this.amount);
+        target.increaseDefense(DEFENSE_BONUS);
     }
 
     @Override
     public void remove(Combatant target) {
-        // Returns original amount after effect expires
-        target.setDefense(target.getDefense() - this.amount);
+        // Returns the original amount after effect expires
+        target.decreaseDefense(DEFENSE_BONUS);
     }
 
     @Override
-    public String getName() {
-        return "Defend effect";
+    public String toString() {
+        return "Defending +" + DEFENSE_BONUS + " DEF (" + duration + " turns remaining)";
     }
 }

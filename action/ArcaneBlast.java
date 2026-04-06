@@ -1,27 +1,27 @@
+package action;
+
+import combatant.Combatant;
+import effect.ArcaneBlastEffect;
+
+import java.util.List;
+
 public class ArcaneBlast implements Action {
-    private List<Combatant> allEnemies;
+    private static final int ATK_BONUS_PER_KILL = 10;
+    private int totalBonusApplied = 0;
+    private int enemyKilled = 0;
 
-    public ArcaneBlast(List<Combatant> allEnemies) {
-        this.allEnemies = allEnemies;
-    }
-    
     @Override
-    public void execute(Combatant user, Combatant target) {
-        int defeated = 0;
-        
-        for (Combatant enemy : allEnemies) {
-            if (!enemy.isAlive()) {
-                continue;
-            }
-            int dmg = Math.max(0, user.getAttack() - enemy.getDefense());
-            enemy.takeDamage(dmg);
-
-            if(!enemy.isAlive()) {
-                defeated++;
+    public void execute(Combatant user, List<Combatant> targets) {
+        for (Combatant target : targets) {
+            if (!target.isDefeated()) {
+                int dmg = Math.max(0, user.getAttack() - target.getDefense());
+                target.takeDamage(dmg);
+                if (target.isDefeated()) {
+                    enemyKilled += 1;
+                }
             }
         }
-        if (defeated > 0) {
-            user.setAttack(user.getAttack() + (defeated * 10));
-        }
+        totalBonusApplied = enemyKilled * ATK_BONUS_PER_KILL;
+        user.addStatusEffect(new ArcaneBlastEffect(totalBonusApplied));
     }
 }

@@ -1,7 +1,25 @@
+package action;
+
+import combatant.Combatant;
+
+import java.util.List;
+
 public class BasicAttack implements Action {
     @Override
-    public void execute(Combatant attacker, Combatant target) {
-        int dmg = Math.max(0, attacker.getAttack() - target.getDefense());
-        target.takeDamage(dmg);
+    public void execute(Combatant attacker, List<Combatant> targets) {
+        Combatant target = targets.getFirst();
+
+        if (!target.isInvulnerable()) {
+            int dmg = Math.max(0, attacker.getAttack() - target.getDefense());
+            System.out.println(attacker.getName() + " attacks " + target.getName()
+                    + "! Damage: " + attacker.getAttack() + " - "
+                    + target.getDefense() + " = " + dmg);
+            target.takeDamage(dmg);
+            System.out.println(target.getName() + " HP: "
+                    + target.getHP() + "/" + target.getMaxHP());
+        } else {
+            System.out.println(attacker.getName() + " attacks " + target.getName()
+                    + "! Damage: 0 (Smoke bomb active)");
+        }
     }
 }
