@@ -1,11 +1,13 @@
 package combatant;
 
+import action.Action;
 import item.Item;
 import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Player extends Combatant {
     private List<Item> items;
+    protected Action specialSkill;
 
     public Player(String name, int maxHP, int HP, int ATK, int DEF, int SPD) {
         super(name, maxHP, HP, ATK, DEF, SPD);
@@ -31,5 +33,11 @@ public abstract class Player extends Combatant {
         useSpecialSkills(targets);
     }
 
-    abstract void useSpecialSkills(List<Combatant> targets);
+    void useSpecialSkills(List<Combatant> targets) {
+        specialSkill.execute(this, targets);
+    }
+
+    public Action getSpecialSkill() {
+        return specialSkill;
+    }
 }

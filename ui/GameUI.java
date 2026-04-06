@@ -66,11 +66,7 @@ public class GameUI {
                 }
                 case 4 -> {
                     if (skillReady) {
-                        if (player instanceof Wizard) {
-                            yield new ArcaneBlast();
-                        } else {
-                            yield new ShieldBash();
-                        }
+                        yield player.getSpecialSkill();
                     } else {
                         yield new BasicAttack(); // fallback if skill isn't ready
                     }
@@ -84,11 +80,7 @@ public class GameUI {
                 case 2 -> new Defend();
                 case 3 -> {
                     if (skillReady) {
-                        if (player instanceof Wizard) {
-                            yield new ArcaneBlast();
-                        } else {
-                            yield new ShieldBash();
-                        }
+                        yield player.getSpecialSkill();
                     } else {
                         yield new BasicAttack(); // fallback if skill isn't ready
                     }
