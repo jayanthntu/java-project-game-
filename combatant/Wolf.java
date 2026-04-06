@@ -2,8 +2,8 @@ package combatant;
 
 public class Wolf extends Enemy
 {
-    public Wolf()
+    public Wolf(String name)
     {
-        super("Wolf", 40, 40, 45, 5, 35);
+        super(name, 40, 40, 45, 5, 35);
     }
 }

@@ -68,6 +68,7 @@ public class GameUI {
                     if (skillReady) {
                         yield player.getSpecialSkill();
                     } else {
+                        System.out.println("Skill not ready yet. Used Basic Attack.");
                         yield new BasicAttack(); // fallback if skill isn't ready
                     }
                 }
@@ -82,6 +83,7 @@ public class GameUI {
                     if (skillReady) {
                         yield player.getSpecialSkill();
                     } else {
+                        System.out.println("Skill not ready yet. Used Basic Attack.");
                         yield new BasicAttack(); // fallback if skill isn't ready
                     }
                 }
