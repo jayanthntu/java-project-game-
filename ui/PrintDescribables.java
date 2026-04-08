@@ -32,7 +32,7 @@ public class PrintDescribables
         for (int i = 0; i < list.size(); i++) 
         {
             T obj = list.get(i);
-            System.out.println((i + 1) + ". " + obj.getName() + c + obj.getDescription());
+            System.out.println((i + 1) + ". " + obj.getName() + " " + c + " " + obj.getDescription());
         }
     }
 }

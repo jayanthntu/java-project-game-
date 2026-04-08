@@ -2,7 +2,8 @@ package combatant;
 
 import action.ShieldBash;
 
-public class Warrior extends Player {
+public class Warrior extends Player 
+{
     public Warrior() {
         super("Warrior", 260, 260, 40, 20, 30);
         specialSkill = new ShieldBash();
@@ -18,6 +19,5 @@ public class Warrior extends Player {
         super(other.getName(), other.getMaxHP(), other.getHP(), other.getAttack(), other.getDefense(), other.getSpeed());
         specialSkill = other.getSpecialSkill();
     }
-
 
 }
