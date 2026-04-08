@@ -1,8 +1,6 @@
 package combatant;
 
-import action.Action;
 import action.ShieldBash;
-import java.util.List;
 
 public class Warrior extends Player {
     public Warrior() {

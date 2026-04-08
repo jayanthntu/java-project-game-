@@ -1,8 +1,6 @@
 package combatant;
 
-import action.Action;
 import action.ArcaneBlast;
-import java.util.List;
 
 public class Wizard extends Player {
     public Wizard() {
