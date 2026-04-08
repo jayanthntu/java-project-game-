@@ -7,8 +7,9 @@ import ui.Describable;
 
 public class ShieldBash implements Action, Describable {
     private static final String NAME = "Shield Bash";
-    private static final String DESCRIPTION = "Deal damage to selected enemy.\n" + 
-        "Selected enemy is unable to take actions for the current turn and the next turn.";
+    private static final String DESCRIPTION = """
+        Deal damage to selected enemy.
+        Selected enemy is unable to take actions for the current turn and the next turn.""";
 
     @Override
     public void execute(Combatant attacker, List<Combatant> targets) {
