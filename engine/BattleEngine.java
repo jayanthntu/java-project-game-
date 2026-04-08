@@ -43,16 +43,20 @@ public class BattleEngine {
                 continue;
             }
 
-            if (current instanceof Player p) {
-                List<Combatant> aliveEnemies = getAliveEnemies();
-                Action action = ui.showActionMenu(p, aliveEnemies);
-                action.execute(p, aliveEnemies);
-                if (p.getSpecialSkillsCooldown() > 0) {
-                    p.decrementSpecialSkillsCooldown();
+            switch (current) {
+                case Player p -> {
+                    List<Combatant> aliveEnemies = getAliveEnemies();
+                    Action action = ui.showActionMenu(p, aliveEnemies);
+                    action.execute(p, aliveEnemies);
+                    if (p.getSpecialSkillsCooldown() > 0) {
+                        p.decrementSpecialSkillsCooldown();
+                    }
                 }
-            } else if (current instanceof Enemy e) {
-                Action action = e.takeTurn(List.of(player));
-                action.execute(e, List.of(player));
+                case Enemy e -> {
+                    Action action = e.takeTurn(List.of(player));
+                    action.execute(e, List.of(player));
+                }
+                default -> throw new IllegalStateException("Unexpected combatant type: " + current.getClass());
             }
 
             if (isOver()) return;
