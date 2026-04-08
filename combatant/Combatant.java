@@ -7,13 +7,13 @@ import java.util.List;
 
 public abstract class Combatant
 {
-    private String name;
-    private int maxHP;
+    private final String name;
+    private final int maxHP;
     private int HP;
     private int ATK;
     private int DEF;
-    private int SPD;
-    private List<StatusEffect> statusEffect;
+    private final int SPD;
+    private final List<StatusEffect> statusEffect;
     private boolean stunned;
     private boolean invulnerable;
     private int specialSkillsCooldown;
