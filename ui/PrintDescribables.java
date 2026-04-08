@@ -4,8 +4,14 @@ import java.util.List;
 
 public class PrintDescribables 
 {
-    public static <T extends Describable> void printDescribable(T obj) {
-        System.out.println(obj.getName() + " - " + obj.getDescription());
+    public static <T extends Describable> void printDescribable(T obj) 
+    {
+        printDescribable(obj, '-');
+    }
+
+    public static <T extends Describable> void printDescribable(T obj, char c) 
+    {
+        System.out.println(obj.getName() + " " + c + " " + obj.getDescription());
     }
 
     public static <T extends Describable> void printDescribables(String title, List<T> list) 

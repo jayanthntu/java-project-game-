@@ -3,9 +3,9 @@ package action;
 import combatant.Combatant;
 import effect.ArcaneBlastEffect;
 import java.util.List;
-import ui.Describable;
 
-public class ArcaneBlast implements Action, Describable {
+public class ArcaneBlast implements SpecialSkill 
+{
     private static final String NAME = "Arcane Blast";
     private static final String DESCRIPTION = """
         Deal damage to all enemies currently in combat.

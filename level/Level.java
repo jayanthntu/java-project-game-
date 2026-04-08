@@ -29,8 +29,12 @@ public class Level {
         return !backupSpawned && backupSpawn != null && !backupSpawn.isEmpty();
     }
 
-    public Difficulty getDifficulty() { return difficulty; }
+    public Difficulty getDifficulty() { 
+        return difficulty; 
+    }
 
-    public List<Enemy> getInitialSpawn() { return initialSpawn; }
+    public List<Enemy> getInitialSpawn() { 
+        return initialSpawn; 
+    }
 
 }

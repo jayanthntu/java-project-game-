@@ -18,4 +18,6 @@ public class Warrior extends Player {
         super(other.getName(), other.getMaxHP(), other.getHP(), other.getAttack(), other.getDefense(), other.getSpeed());
         specialSkill = other.getSpecialSkill();
     }
+
+
 }

@@ -31,14 +31,34 @@ public abstract class Combatant
         this.specialSkillsCooldown = 0;
     }
 
-    public String getName() { return name; }
+    public String getName() 
+    {
+        return name;
+    }
 
-    public int getHP() { return this.HP; }
+    public int getHP() 
+    {
+        return this.HP;
+    }
 
-    public int getMaxHP() { return this.maxHP; }
+    public int getMaxHP() 
+    {
+        return this.maxHP;
+    }
 
-    public int getAttack() {
+    public int getAttack() 
+    {
         return ATK;
+    }
+
+    public int getSpeed() 
+    {
+    return this.SPD;
+    }
+
+    public int getDefense() 
+    {
+        return DEF;
     }
 
     public void increaseAttack(int atk) {
@@ -47,9 +67,6 @@ public abstract class Combatant
 
     public void decreaseAttack(int atk) { ATK -= atk; }
 
-    public int getDefense() {
-        return DEF;
-    }
 
     public void increaseDefense(int def) {
         DEF += def;
@@ -100,10 +117,6 @@ public abstract class Combatant
 
     public void removeStatusEffect(StatusEffect effect) {
         effect.remove(this);
-    }
-
-    public int getSpeed() {
-        return this.SPD;
     }
 
     public void tickStatusEffects() {

@@ -78,13 +78,8 @@ public class GameUI {
                 }
                 case 4 -> {
                     if (skillReady) {
-                        if (player instanceof Wizard) {
-                            System.out.println("Arcane Blast activated!");
-                            yield new ArcaneBlast();
-                        } else {
-                            System.out.println("Shield Bash activated!");
-                            yield new ShieldBash();
-                        }
+                        System.out.println(player.getSpecialSkill().getName()+ " activated!");
+                        yield player.getSpecialSkill();
                     } else {
                         System.out.println("Special skill is on cooldown (" + player.getSpecialSkillsCooldown() + " turns remaining). Using Basic Attack instead.");
                         yield fallback(player, aliveEnemies);

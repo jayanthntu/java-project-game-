@@ -1,15 +1,19 @@
 package combatant;
 
-import action.Action;
+import action.SpecialSkill;
 import item.Item;
+import ui.Describable;
 import java.util.List;
+
 import java.util.ArrayList;
 
-public abstract class Player extends Combatant {
+public abstract class Player extends Combatant implements Describable
+{
     private List<Item> items;
-    protected Action specialSkill;
+    protected SpecialSkill specialSkill;
 
-    public Player(String name, int maxHP, int HP, int ATK, int DEF, int SPD) {
+    public Player(String name, int maxHP, int HP, int ATK, int DEF, int SPD) 
+    {
         super(name, maxHP, HP, ATK, DEF, SPD);
         items = new ArrayList<>();
     }
@@ -37,7 +41,20 @@ public abstract class Player extends Combatant {
         specialSkill.execute(this, targets);
     }
 
-    public Action getSpecialSkill() {
+    public SpecialSkill getSpecialSkill() {
         return specialSkill;
+    }
+
+    @Override
+    public String getName()
+    {
+        return super.getName();
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return "HP: " + super.getHP() + " ATK: " + super.getAttack() + " DEF: " + super.getDefense()
+            + " SPD: " + super.getSpeed() + " | Skill: " + this.getSpecialSkill().getName();  
     }
 }

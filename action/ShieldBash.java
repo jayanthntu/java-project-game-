@@ -3,9 +3,8 @@ package action;
 import combatant.Combatant;
 import effect.StunEffect;
 import java.util.List;
-import ui.Describable;
 
-public class ShieldBash implements Action, Describable {
+public class ShieldBash implements SpecialSkill {
     private static final String NAME = "Shield Bash";
     private static final String DESCRIPTION = """
         Deal damage to selected enemy.
