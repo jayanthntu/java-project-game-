@@ -4,14 +4,17 @@ import effect.SmokeBombEffect;
 import combatant.Combatant;
 import java.util.List;
 
-public class SmokeBomb extends Item {
+public class SmokeBomb extends Item 
+{
 
-    public SmokeBomb() {
+    public SmokeBomb() 
+    {
         super("Smoke Bomb", "Enemy attacks deal 0 damage for 2 turns");
     }
 
     @Override
-    public void use(Combatant actor, List<Combatant> targets) {
+    public void use(Combatant actor, List<Combatant> targets) 
+    {
         actor.addStatusEffect(new SmokeBombEffect(2));
         setUsed(true);
         System.out.println(actor.getName()

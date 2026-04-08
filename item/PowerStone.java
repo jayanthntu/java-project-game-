@@ -4,15 +4,19 @@ import java.util.List;
 import combatant.Combatant;
 import combatant.Player;
 
-public class PowerStone extends Item {
+public class PowerStone extends Item 
+{
 
-    public PowerStone() {
+    public PowerStone() 
+    {
         super("Power Stone", "Free extra use of special skill");
     }
 
     @Override
-    public void use(Combatant actor, List<Combatant> targets) {
-        if (actor instanceof Player player) {
+    public void use(Combatant actor, List<Combatant> targets) 
+    {
+        if (actor instanceof Player player) 
+        {
             // Trigger special skill effect without touching cooldown
             player.useSpecialSkillEffectWithoutCD(targets);
             setUsed(true);

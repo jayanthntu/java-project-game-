@@ -2,8 +2,9 @@ package item;
 
 import java.util.List;
 import combatant.Combatant;
+import ui.Describable;
 
-public abstract class Item 
+public abstract class Item implements Describable
 {
     protected String name;
     protected String description;
@@ -28,11 +29,13 @@ public abstract class Item
         this.used = used;
     }
 
+    @Override
     public String getName() 
     {
         return name;
     }
 
+    @Override
     public String getDescription() 
     {
         return description;
