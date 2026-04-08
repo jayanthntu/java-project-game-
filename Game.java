@@ -1,4 +1,6 @@
 import combatant.Player;
+import combatant.Warrior;
+import combatant.Wizard;
 import engine.BattleEngine;
 import level.Difficulty;
 import level.Level;
@@ -7,9 +9,11 @@ import ui.GameUI;
 
 public class Game {
     private Level currentLevel;
+    private Level currentLevelBackup;
     private GameUI ui;
     private BattleEngine engine;
     private Player player;
+    private Player playerBackup;
 
     public Game() {
         this.ui = new GameUI();
@@ -19,9 +23,18 @@ public class Game {
         ui.displayMessage("=== TURN-BASED COMBAT ARENA ===");
 
         player = ui.selectPlayer();
+
+        if (player instanceof Warrior)
+            playerBackup = new Warrior(player);
+        else
+            playerBackup = new Wizard(player);
+
         ui.selectItems(player);
+
         Difficulty difficulty = ui.selectDifficulty();
         currentLevel = LevelFactory.create(difficulty);
+        currentLevelBackup = LevelFactory.create(difficulty);
+
         engine = new BattleEngine(player, currentLevel, ui);
         runGame();
     }
@@ -52,8 +65,8 @@ public class Game {
         int choice = ui.getPlayerInput(3);
         switch (choice) {
             case 1 -> {
-                player.heal(player.getMaxHP());
-                engine = new BattleEngine(player, currentLevel, ui);
+                engine = new BattleEngine(playerBackup, currentLevelBackup, ui);
+                ui.selectItems(player);
                 runGame();
             }
             case 2 -> start();
