@@ -6,7 +6,7 @@ import item.Item;
 import java.util.List;
 
 public class ItemAction implements Action {
-    private Item itemToUse;
+    private final Item itemToUse;
 
     public ItemAction(Item selectedItem) {
         itemToUse = selectedItem;

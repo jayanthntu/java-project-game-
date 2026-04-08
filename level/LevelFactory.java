@@ -1,7 +1,6 @@
 package level;
 
-import combatant.Goblin;
-import combatant.Wolf;
+import combatant.*;
 import java.util.List;
 
 public class LevelFactory {

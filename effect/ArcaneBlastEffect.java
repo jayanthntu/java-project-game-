@@ -3,7 +3,7 @@ package effect;
 import combatant.Combatant;
 
 public class ArcaneBlastEffect extends StatusEffect {
-    private int amount;
+    private final int amount;
 
     public ArcaneBlastEffect(int amount) {
         super(Integer.MAX_VALUE);

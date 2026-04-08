@@ -1,8 +1,6 @@
 package level;
 
-import combatant.Enemy;
-import combatant.Goblin;
-import combatant.Wolf;
+import combatant.*;
 
 import java.util.ArrayList;
 import java.util.List;
