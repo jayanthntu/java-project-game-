@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameUI {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
         System.out.println("\n========== ROUND " + round + " ==========");
