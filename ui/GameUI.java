@@ -198,10 +198,10 @@ public class GameUI {
     }
 
     public void selectItems(Player player) {
+        List<Item> availableItems = List.of(new Potion(), new PowerStone(), new SmokeBomb());
+
         System.out.println("\n=== SELECT 2 ITEMS (duplicates allowed) ===");
-        System.out.println("1. Potion     - Heal 100 HP");
-        System.out.println("2. Power Stone - Free extra use of special skill");
-        System.out.println("3. Smoke Bomb  - Enemy attacks deal 0 damage for 2 turns");
+        PrintDescribables.printDescribables("Item List", availableItems);
 
         List<Item> chosen = new ArrayList<>();
         for (int i = 1; i <= 2; i++) {
