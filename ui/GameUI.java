@@ -151,24 +151,6 @@ public class GameUI {
         return input;
     }
 
-    private Combatant selectTarget(List<Combatant> targets) {
-        System.out.println("Select target:");
-        for (int i = 0; i < targets.size(); i++) {
-            System.out.println((i + 1) + ". " + targets.get(i).getName()
-                    + " (HP: " + targets.get(i).getHP() + ")");
-        }
-        int choice = getPlayerInput(targets.size());
-
-        try {
-            Combatant selected = targets.get(choice - 1);
-            System.out.println("Target selected: " + selected.getName());
-            return selected;
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Invalid target selection. Selecting first target.");
-            return targets.getFirst();
-        }
-    }
-
     private Item selectItem(Player player) {
         List<Item> available = player.getItems().stream()
                 .filter(i -> !i.isUsed()).toList();
