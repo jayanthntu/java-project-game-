@@ -7,7 +7,7 @@ import java.util.List;
 public class SmokeBomb extends Item {
 
     public SmokeBomb() {
-        super("Smoke Bomb");
+        super("Smoke Bomb", "Enemy attacks deal 0 damage for 2 turns");
     }
 
     @Override

@@ -8,7 +8,7 @@ public class Potion extends Item {
     private static final int HEAL_AMOUNT = 100;
 
     public Potion() {
-        super("Potion");
+        super("Potion", "Heal 100 HP");
     }
 
     @Override

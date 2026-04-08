@@ -7,7 +7,7 @@ import combatant.Player;
 public class PowerStone extends Item {
 
     public PowerStone() {
-        super("Power Stone");
+        super("Power Stone", "Free extra use of special skill");
     }
 
     @Override
