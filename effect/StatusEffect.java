@@ -22,5 +22,6 @@ public abstract class StatusEffect {
     // When the effect expires
     public abstract void remove(Combatant target);
 
+    @Override
     public abstract String toString();
 }
