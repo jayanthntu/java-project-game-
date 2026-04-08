@@ -1,11 +1,7 @@
 package ui;
 
 import action.*;
-import combatant.Combatant;
-import combatant.Player;
-import combatant.Warrior;
-import combatant.Wizard;
-import item.Item;
+import combatant.*;
 import item.*;
 import level.Difficulty;
 
