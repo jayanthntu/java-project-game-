@@ -24,4 +24,10 @@ public class PowerStone extends Item
                     + " used Power Stone! Special skill triggered for free!");
         }
     }
+
+    @Override
+    public Item copy() 
+    {
+        return new PowerStone();
+    }
 }

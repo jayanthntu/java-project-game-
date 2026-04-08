@@ -20,4 +20,10 @@ public class SmokeBomb extends Item
         System.out.println(actor.getName()
                 + " used Smoke Bomb! Enemy attacks deal 0 damage for 2 turns.");
     }
+
+    @Override
+    public Item copy() 
+    {
+        return new SmokeBomb();
+    }
 }

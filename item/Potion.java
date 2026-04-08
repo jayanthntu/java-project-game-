@@ -22,4 +22,10 @@ public class Potion extends Item
                 + HEAL_AMOUNT + " HP. HP: " + actor.getHP()
                 + "/" + actor.getMaxHP());
     }
+
+    @Override
+    public Item copy() 
+    {
+        return new Potion();
+    }
 }

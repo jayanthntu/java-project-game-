@@ -4,7 +4,7 @@ import java.util.List;
 import combatant.Combatant;
 import ui.Describable;
 
-public abstract class Item implements Describable
+public abstract class Item implements Describable 
 {
     protected String name;
     protected String description;
@@ -19,6 +19,8 @@ public abstract class Item implements Describable
 
     public abstract void use(Combatant actor, List<Combatant> targets);
 
+    public abstract Item copy();
+
     public boolean isUsed() 
     {
         return used;
@@ -29,13 +31,11 @@ public abstract class Item implements Describable
         this.used = used;
     }
 
-    @Override
     public String getName() 
     {
         return name;
     }
 
-    @Override
     public String getDescription() 
     {
         return description;

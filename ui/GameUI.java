@@ -197,46 +197,35 @@ public class GameUI {
         }
     }
 
-    public void selectItems(Player player) {
-        List<Item> availableItems = List.of(new Potion(), new PowerStone(), new SmokeBomb());
+public void selectItems(Player player) 
+{
+    List<Item> availableItems = List.of( new Potion(), new PowerStone(), new SmokeBomb());
 
-        System.out.println("\n=== SELECT 2 ITEMS (duplicates allowed) ===");
-        PrintDescribables.printDescribables("Item List", availableItems);
+    System.out.println("\n=== SELECT 2 ITEMS (duplicates allowed) ===");
+    PrintDescribables.printDescribables("Item List", availableItems);
 
-        List<Item> chosen = new ArrayList<>();
-        for (int i = 1; i <= 2; i++) {
-            System.out.println("\nSelect item " + i + ":");
-            int choice = getPlayerInput(3);
+    List<Item> chosen = new ArrayList<>();
 
-            Item selectedItem = switch (choice) {
-                case 1 -> {
-                    System.out.println("Potion selected!");
-                    yield new Potion();
-                }
-                case 2 -> {
-                    System.out.println("Power Stone selected!");
-                    yield new PowerStone();
-                }
-                case 3 -> {
-                    System.out.println("Smoke Bomb selected!");
-                    yield new SmokeBomb();
-                }
-                default -> {
-                    System.out.println("Invalid input, please enter input within valid range.");
-                    yield new Potion();
-                }
-            };
-            chosen.add(selectedItem);
-        }
-        System.out.println("\nItems confirmed! Ready to battle!");
-        player.setItems(chosen);
+    for (int i = 1; i <= 2; i++) 
+    {
+        System.out.println("\nSelect item " + i + ":");
+        int choice = getPlayerInput(availableItems.size());
+
+        Item selectedItem = availableItems.get(choice - 1).copy();
+
+        System.out.println(selectedItem.getName() + " selected!");
+        chosen.add(selectedItem);
     }
+
+    System.out.println("\nItems confirmed! Ready to battle!");
+    player.setItems(chosen);
+}
 
     public Difficulty selectDifficulty() {
         System.out.println("\n=== SELECT DIFFICULTY ===");
         System.out.println("1. Easy   - 3 Goblins");
         System.out.println("2. Medium - 1 Goblin + 1 Wolf | Backup: 2 Wolves");
-        System.out.println("3. Hard   - 2 Goblins          | Backup: 1 Goblin + 2 Wolves");
+        System.out.println("3. Hard   - 2 Goblins         | Backup: 1 Goblin + 2 Wolves");
 
         int choice = getPlayerInput(3);
 
