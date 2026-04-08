@@ -176,20 +176,14 @@ public class GameUI {
         System.out.println(message);
     }
 
-    public Player selectPlayer() {
-        System.out.println("\n=== SELECT YOUR CHARACTER ===");
-        System.out.println("1. Warrior | HP: 260  ATK: 40  DEF: 20  SPD: 30 | Skill: Shield Bash");
-        System.out.println("2. Wizard  | HP: 200  ATK: 50  DEF: 10  SPD: 20 | Skill: Arcane Blast");
+    public Player selectPlayer() 
+    {
+        List<Player> availablePlayers = List.of( new Warrior(), new Wizard() );
+        PrintDescribables.printDescribables("\n=== SELECT YOUR CHARACTER ===", availablePlayers, '|');
 
         int choice = getPlayerInput(2);
 
-        if (choice == 1) {
-            System.out.println("Warrior selected! Preparing for battle...");
-            return new Warrior();
-        } else {
-            System.out.println("Wizard selected! Preparing for battle...");
-            return new Wizard();
-        }
+        return availablePlayers.get(choice-1);
     }
 
 public void selectItems(Player player) 

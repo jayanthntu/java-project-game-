@@ -31,11 +31,13 @@ public abstract class Item implements Describable
         this.used = used;
     }
 
+    @Override
     public String getName() 
     {
         return name;
     }
 
+    @Override
     public String getDescription() 
     {
         return description;
