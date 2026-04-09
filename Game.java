@@ -1,3 +1,4 @@
+import combatant.CustomPlayer;
 import combatant.Player;
 import combatant.Warrior;
 import combatant.Wizard;
@@ -26,6 +27,13 @@ public class Game {
 
         player = ui.selectPlayer();
         playerBackup = (player instanceof Warrior) ? new Warrior(player) : new Wizard(player);
+
+        ui.showSelectedPlayer(player);
+
+        if (player instanceof CustomPlayer) {
+            player = ui.createCustomPlayer();
+            playerBackup = new CustomPlayer(player);
+        }
 
         ui.selectItems(player);
 

@@ -184,10 +184,10 @@ public class GameUI {
 
     public Player selectPlayer() 
     {
-        List<Player> availablePlayers = List.of( new Warrior(), new Wizard() );
+        List<Player> availablePlayers = List.of( new Warrior(), new Wizard(), new CustomPlayer() );
         PrintDescribables.printDescribables("SELECT YOUR CHARACTER", availablePlayers, '|');
 
-        int choice = getPlayerInput(2);
+        int choice = getPlayerInput(3);
 
         return availablePlayers.get(choice-1);
     }
@@ -256,5 +256,37 @@ public class GameUI {
 
     public void showDifficulty(Difficulty difficulty) {
         System.out.println("Difficulty Level: " + difficulty);
+    }
+
+    public void showSelectedPlayer(Player player) {
+        System.out.println("Selected Player: " + player.getClass().getSimpleName());
+        System.out.println();
+    }
+
+    public Player createCustomPlayer() {
+        System.out.println("=== CUSTOM PLAYER BUILDER===");
+        System.out.println("NAME:");
+        String name = scanner.nextLine().trim();
+        System.out.println("HP:");
+        int hp = getPlayerInput(999);
+        System.out.println("ATTACK:");
+        int atk = getPlayerInput(999);
+        System.out.println("DEFENCE:");
+        int def = getPlayerInput(999);
+        System.out.println("SPEED:");
+        int spd = getPlayerInput(999);
+        System.out.println("Choose Special Skill:");
+        System.out.println("1. Shield Bash");
+        System.out.println("2. Arcane Blast");
+        SpecialSkill specialSkill = switch (getPlayerInput(2)) {
+            case 1 -> new ShieldBash();
+            case 2 -> new ArcaneBlast();
+            default -> {
+                System.out.println("Invalid Input");
+                yield new CustomSkill();
+            }
+        };
+        System.out.println("Custom Player Created!");
+        return new CustomPlayer(name, hp, atk, def, spd, specialSkill);
     }
 }
