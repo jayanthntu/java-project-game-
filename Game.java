@@ -7,6 +7,8 @@ import level.Level;
 import level.LevelFactory;
 import ui.GameUI;
 
+import java.util.List;
+
 public class Game {
     private Level currentLevel;
     private Level currentLevelBackup;
@@ -28,8 +30,16 @@ public class Game {
         ui.selectItems(player);
 
         Difficulty difficulty = ui.selectDifficulty();
-        currentLevel = LevelFactory.create(difficulty);
-        currentLevelBackup = LevelFactory.create(difficulty);
+        ui.showDifficulty(difficulty);
+
+        if (difficulty == Difficulty.CUSTOM) {
+            List<Integer> customLevelSettings = ui.createCustomLevel();
+            currentLevel = LevelFactory.createCustom(customLevelSettings);
+            currentLevelBackup = LevelFactory.createCustom(customLevelSettings);
+        } else {
+            currentLevel = LevelFactory.create(difficulty);
+            currentLevelBackup = LevelFactory.create(difficulty);
+        }
 
         engine = new BattleEngine(player, currentLevel, ui);
         runGame();

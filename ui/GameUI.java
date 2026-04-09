@@ -4,7 +4,6 @@ import action.*;
 import combatant.*;
 import item.*;
 import level.Difficulty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -220,21 +219,42 @@ public class GameUI {
     public Difficulty selectDifficulty() {
         System.out.println("\n=== SELECT DIFFICULTY ===");
         System.out.println("1. Easy   - 3 Goblins");
-        System.out.println("2. Medium - 1 Goblin + 1 Wolf | Backup: 2 Wolves");
-        System.out.println("3. Hard   - 2 Goblins         | Backup: 1 Goblin + 2 Wolves");
+        System.out.println("2. Medium - 1 Goblin + 1 Wolf    | Backup: 2 Wolves");
+        System.out.println("3. Hard   - 2 Goblins            | Backup: 1 Goblin + 2 Wolves");
+        System.out.println("4. Custom - ? Goblins + ? Wolves | Backup: ? Goblins + ? Wolves");
 
-        int choice = getPlayerInput(3);
-
-        Difficulty selected = switch (choice) {
+        return switch (getPlayerInput(4)) {
             case 1 -> Difficulty.EASY;
             case 2 -> Difficulty.MEDIUM;
             case 3 -> Difficulty.HARD;
+            case 4 -> Difficulty.CUSTOM;
             default -> {
                 System.out.println("Invalid input, please enter input within valid range.");
-                yield Difficulty.EASY;
+                yield selectDifficulty();
             }
         };
+    }
 
-        return selected;
+    public List<Integer> createCustomLevel() {
+        List<Integer> customSettings = new ArrayList<>();
+
+        System.out.println();
+        System.out.println("=== INITIAL SPAWN ===");
+        System.out.println("Choose the number of goblins (Maximum: 5)");
+        customSettings.add(getPlayerInput(5));
+        System.out.println("Choose the number of wolves (Maximum: 5)");
+        customSettings.add(getPlayerInput(5));
+        System.out.println();
+        System.out.println("=== BACKUP SPAWN ===");
+        System.out.println("Choose the number of goblins (Maximum: 5)");
+        customSettings.add(getPlayerInput(5));
+        System.out.println("Choose the number of wolves (Maximum: 5)");
+        customSettings.add(getPlayerInput(5));
+
+        return customSettings;
+    }
+
+    public void showDifficulty(Difficulty difficulty) {
+        System.out.println("Difficulty Level: " + difficulty);
     }
 }

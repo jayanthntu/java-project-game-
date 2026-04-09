@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
-    private Difficulty difficulty;
-    private List<Enemy> initialSpawn;
-    private List<Enemy> backupSpawn;
+    private final Difficulty difficulty;
+    private final List<Enemy> initialSpawn;
+    private final List<Enemy> backupSpawn;
     private boolean backupSpawned = false;
 
     public Level(Difficulty difficulty, List<Enemy> initialSpawn, List<Enemy> backupSpawn) {
@@ -27,10 +27,6 @@ public class Level {
 
     public boolean hasBackupSpawn() {
         return !backupSpawned && backupSpawn != null && !backupSpawn.isEmpty();
-    }
-
-    public Difficulty getDifficulty() { 
-        return difficulty; 
     }
 
     public List<Enemy> getInitialSpawn() { 

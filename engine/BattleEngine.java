@@ -74,7 +74,7 @@ public class BattleEngine {
 
         if (aliveEnemies.isEmpty() && level.hasBackupSpawn()) {
             List<Enemy> backup = level.triggerBackupSpawn();
-            ui.displayMessage("Backup enemies have spawned!");
+            ui.displayMessage("BEWARE! Backup enemies have spawned!");
             combatants.addAll(backup);
         }
 
