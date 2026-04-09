@@ -179,7 +179,7 @@ public class GameUI {
     public Player selectPlayer() 
     {
         List<Player> availablePlayers = List.of( new Warrior(), new Wizard() );
-        PrintDescribables.printDescribables("\n=== SELECT YOUR CHARACTER ===", availablePlayers, '|');
+        PrintDescribables.printDescribables("SELECT YOUR CHARACTER", availablePlayers, '|');
 
         int choice = getPlayerInput(2);
 
@@ -190,7 +190,7 @@ public void selectItems(Player player)
 {
     List<Item> availableItems = List.of( new Potion(), new PowerStone(), new SmokeBomb());
 
-    System.out.println("\n=== SELECT 2 ITEMS (duplicates allowed) ===");
+    System.out.println("SELECT 2 ITEMS (duplicates allowed)");
     PrintDescribables.printDescribables("Item List", availableItems);
 
     List<Item> chosen = new ArrayList<>();
