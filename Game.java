@@ -61,8 +61,8 @@ public class Game {
         int choice = ui.getPlayerInput(3);
         switch (choice) {
             case 1 -> {
+                ui.selectItems(playerBackup);
                 engine = new BattleEngine(playerBackup, currentLevelBackup, ui);
-                ui.selectItems(player);
                 runGame();
             }
             case 2 -> start();

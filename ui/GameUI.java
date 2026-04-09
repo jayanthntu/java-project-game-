@@ -193,29 +193,29 @@ public class GameUI {
         return availablePlayers.get(choice-1);
     }
 
-public void selectItems(Player player) 
-{
-    List<Item> availableItems = List.of( new Potion(), new PowerStone(), new SmokeBomb());
-
-    System.out.println("SELECT 2 ITEMS (duplicates allowed)");
-    PrintDescribables.printDescribables("Item List", availableItems);
-
-    List<Item> chosen = new ArrayList<>();
-
-    for (int i = 1; i <= 2; i++) 
+    public void selectItems(Player player)
     {
-        System.out.println("\nSelect item " + i + ":");
-        int choice = getPlayerInput(availableItems.size());
+        List<Item> availableItems = List.of( new Potion(), new PowerStone(), new SmokeBomb());
 
-        Item selectedItem = availableItems.get(choice - 1).copy();
+        System.out.println("SELECT 2 ITEMS (duplicates allowed)");
+        PrintDescribables.printDescribables("Item List", availableItems);
 
-        System.out.println(selectedItem.getName() + " selected!");
-        chosen.add(selectedItem);
+        List<Item> chosen = new ArrayList<>();
+
+        for (int i = 1; i <= 2; i++)
+        {
+            System.out.println("\nSelect item " + i + ":");
+            int choice = getPlayerInput(availableItems.size());
+
+            Item selectedItem = availableItems.get(choice - 1).copy();
+
+            System.out.println(selectedItem.getName() + " selected!");
+            chosen.add(selectedItem);
+        }
+
+        System.out.println("\nItems confirmed! Ready to battle!");
+        player.setItems(chosen);
     }
-
-    System.out.println("\nItems confirmed! Ready to battle!");
-    player.setItems(chosen);
-}
 
     public Difficulty selectDifficulty() {
         System.out.println("\n=== SELECT DIFFICULTY ===");
