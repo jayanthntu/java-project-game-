@@ -10,7 +10,7 @@ import ui.GameUI;
 public class Game {
     private Level currentLevel;
     private Level currentLevelBackup;
-    private GameUI ui;
+    private final GameUI ui;
     private BattleEngine engine;
     private Player player;
     private Player playerBackup;
