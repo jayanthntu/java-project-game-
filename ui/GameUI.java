@@ -45,10 +45,17 @@ public class GameUI {
         System.out.println("2. Defend");
 
         boolean hasItems = player.getItems().stream().anyMatch(i -> !i.isUsed());
-        if (hasItems) System.out.println("3. Use Item");
+        if (hasItems) {
+            System.out.println("3. Use Item");
+            System.out.print("4. ");
+        } else {
+            System.out.print("3. ");
+        }
 
         boolean skillReady = player.getSpecialSkillsCooldown() == 0;
-        System.out.print("4. Special Skill");
+
+
+        System.out.print("Special Skill");
         if (skillReady) {
             System.out.println(" (Ready!)");
         } else {

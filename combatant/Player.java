@@ -34,7 +34,9 @@ public abstract class Player extends Combatant implements Describable
     }
 
     public final void useSpecialSkillEffectWithoutCD(List<Combatant> targets) {
+        int cooldown = getSpecialSkillsCooldown();
         useSpecialSkills(targets);
+        setSpecialSkillsCooldown(cooldown);
     }
 
     void useSpecialSkills(List<Combatant> targets) {
