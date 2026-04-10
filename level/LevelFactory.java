@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelFactory {
+    private static final List<Difficulty> DIFFICULTIES = List.of(new Easy(), new Medium(), new Hard(), new Custom());
+
     public static Level create(Difficulty difficulty) {
         return switch (difficulty) {
             case EASY -> new Level(difficulty,
