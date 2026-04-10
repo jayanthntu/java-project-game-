@@ -3,7 +3,7 @@ package ui;
 import action.*;
 import combatant.*;
 import item.*;
-import level.Difficulty;
+import level.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -99,7 +99,7 @@ public class GameUI {
                 }
                 default -> {
                     System.out.println("Invalid input, please enter input within valid range.");
-                    yield new BasicAttack();
+                    yield fallback(player, aliveEnemies);
                 }
             };
         } 
@@ -191,9 +191,10 @@ public class GameUI {
 
     public Player selectPlayer() 
     {
-        List<Player> availablePlayers = List.of( new Warrior(), new Wizard(), new CustomPlayer() );
+        List<Player> availablePlayers = List.of(new Warrior(), new Wizard(), new CustomPlayer() );
         PrintDescribables.printDescribables("SELECT YOUR CHARACTER", availablePlayers, '|');
 
+        System.out.println();
         int choice = getPlayerInput(3);
 
         return availablePlayers.get(choice-1);
@@ -201,7 +202,7 @@ public class GameUI {
 
     public void selectItems(Player player)
     {
-        List<Item> availableItems = List.of( new Potion(), new PowerStone(), new SmokeBomb());
+        List<Item> availableItems = List.of(new Potion(), new PowerStone(), new SmokeBomb());
 
         System.out.println("SELECT 2 ITEMS (duplicates allowed)");
         PrintDescribables.printDescribables("Item List", availableItems);
@@ -210,7 +211,7 @@ public class GameUI {
 
         for (int i = 1; i <= 2; i++)
         {
-            System.out.println("\nSelect item " + i + ":");
+            System.out.print("\nSelect item " + i + ": ");
             int choice = getPlayerInput(availableItems.size());
 
             Item selectedItem = availableItems.get(choice - 1).copy();
@@ -224,22 +225,13 @@ public class GameUI {
     }
 
     public Difficulty selectDifficulty() {
-        System.out.println("\n=== SELECT DIFFICULTY ===");
-        System.out.println("1. Easy   - 3 Goblins");
-        System.out.println("2. Medium - 1 Goblin + 1 Wolf    | Backup: 2 Wolves");
-        System.out.println("3. Hard   - 2 Goblins            | Backup: 1 Goblin + 2 Wolves");
-        System.out.println("4. Custom - ? Goblins + ? Wolves | Backup: ? Goblins + ? Wolves");
+        List<Difficulty> difficulties = List.of(new Easy(), new Medium(), new Hard(), new Custom());
+        System.out.println("\nSELECT DIFFICULTY");
+        PrintDescribables.printDescribables("Difficulties", difficulties);
 
-        return switch (getPlayerInput(4)) {
-            case 1 -> Difficulty.EASY;
-            case 2 -> Difficulty.MEDIUM;
-            case 3 -> Difficulty.HARD;
-            case 4 -> Difficulty.CUSTOM;
-            default -> {
-                System.out.println("Invalid input, please enter input within valid range.");
-                yield selectDifficulty();
-            }
-        };
+        System.out.println();
+        int choice = getPlayerInput(difficulties.size());
+        return difficulties.get(choice - 1);
     }
 
     public List<Integer> createCustomLevel() {
@@ -272,26 +264,30 @@ public class GameUI {
 
     public Player createCustomPlayer() {
         System.out.println("=== CUSTOM PLAYER BUILDER ===");
-        //selecting custom stats
-        System.out.println("NAME:");
-        String name = scanner.nextLine().trim();
-        System.out.println("HP:");
-        int hp = getPlayerInput(MAXSTAT);
-        System.out.println("ATK:");
-        int atk = getPlayerInput(MAXSTAT);
-        System.out.println("DEF:");
-        int def = getPlayerInput(MAXSTAT);
-        System.out.println("SPD:");
-        int spd = getPlayerInput(MAXSTAT);
-        //selecting specialskill 
-        List<SpecialSkill> availableSpecialSkills = List.of( new ShieldBash(), new ArcaneBlast());
 
-        PrintDescribables.printDescribables("Choose Special Skill:", availableSpecialSkills);
+        // Select custom stats
+        System.out.print("NAME: ");
+        String name = scanner.nextLine().trim();
+        System.out.print("HP: ");
+        int hp = getPlayerInput(MAXSTAT);
+        System.out.print("ATK: ");
+        int atk = getPlayerInput(MAXSTAT);
+        System.out.print("DEF: ");
+        int def = getPlayerInput(MAXSTAT);
+        System.out.print("SPD: ");
+        int spd = getPlayerInput(MAXSTAT);
+
+        // Select specialskill
+        List<SpecialSkill> availableSpecialSkills = List.of(new ShieldBash(), new ArcaneBlast());
+
+        PrintDescribables.printDescribables("Choose Special Skill", availableSpecialSkills);
+        System.out.println();
         int choice = getPlayerInput(availableSpecialSkills.size());
+
         SpecialSkill selectedSpecialSkill = availableSpecialSkills.get(choice - 1);
 
         System.out.println(selectedSpecialSkill.getName() + " selected!");
-        System.out.println("Custom Player Created!");
+        System.out.println("Custom Player Created!\n");
 
         return new CustomPlayer(name, hp, atk, def, spd, selectedSpecialSkill);
     }

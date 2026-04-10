@@ -33,4 +33,7 @@ public class Level {
         return initialSpawn; 
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 }

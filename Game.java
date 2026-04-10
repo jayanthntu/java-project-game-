@@ -3,9 +3,7 @@ import combatant.Player;
 import combatant.Warrior;
 import combatant.Wizard;
 import engine.BattleEngine;
-import level.Difficulty;
-import level.Level;
-import level.LevelFactory;
+import level.*;
 import ui.GameUI;
 
 import java.util.List;
@@ -40,7 +38,7 @@ public class Game {
         Difficulty difficulty = ui.selectDifficulty();
         ui.showDifficulty(difficulty);
 
-        if (difficulty == Difficulty.CUSTOM) {
+        if (difficulty instanceof Custom) {
             List<Integer> customLevelSettings = ui.createCustomLevel();
             currentLevel = LevelFactory.createCustom(customLevelSettings);
             currentLevelBackup = LevelFactory.createCustom(customLevelSettings);
