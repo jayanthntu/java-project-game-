@@ -99,7 +99,7 @@ public class GameUI {
                 }
                 default -> {
                     System.out.println("Invalid input, please enter input within valid range.");
-                    yield new BasicAttack();
+                    yield fallback(player, aliveEnemies);
                 }
             };
         } 
@@ -191,7 +191,7 @@ public class GameUI {
 
     public Player selectPlayer() 
     {
-        List<Player> availablePlayers = List.of( new Warrior(), new Wizard(), new CustomPlayer() );
+        List<Player> availablePlayers = List.of(new Warrior(), new Wizard(), new CustomPlayer() );
         PrintDescribables.printDescribables("SELECT YOUR CHARACTER", availablePlayers, '|');
 
         int choice = getPlayerInput(3);
@@ -201,7 +201,7 @@ public class GameUI {
 
     public void selectItems(Player player)
     {
-        List<Item> availableItems = List.of( new Potion(), new PowerStone(), new SmokeBomb());
+        List<Item> availableItems = List.of(new Potion(), new PowerStone(), new SmokeBomb());
 
         System.out.println("SELECT 2 ITEMS (duplicates allowed)");
         PrintDescribables.printDescribables("Item List", availableItems);
@@ -276,7 +276,7 @@ public class GameUI {
         int spd = getPlayerInput(MAXSTAT);
 
         // Select specialskill
-        List<SpecialSkill> availableSpecialSkills = List.of( new ShieldBash(), new ArcaneBlast());
+        List<SpecialSkill> availableSpecialSkills = List.of(new ShieldBash(), new ArcaneBlast());
 
         PrintDescribables.printDescribables("Choose Special Skill:", availableSpecialSkills);
         int choice = getPlayerInput(availableSpecialSkills.size());
