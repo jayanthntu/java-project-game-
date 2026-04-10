@@ -8,14 +8,10 @@ public class SmokeBombEffect extends StatusEffect {
     }
 
     @Override
-    public void apply(Combatant target) {
-        target.addStatusEffect(this);
-    }
+    public void apply(Combatant target) {}
 
     @Override
-    public void remove(Combatant target) {
-        target.removeStatusEffect(this);
-    }
+    public void remove(Combatant target) {}
 
     @Override
     public String toString() {

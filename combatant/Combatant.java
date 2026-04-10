@@ -69,7 +69,7 @@ public abstract class Combatant
     public void decreaseDefense(int def) { DEF -= def; }
 
     public void takeDamage(int dmg) {
-        if (hasStatusEffect(SmokeBombEffect.class)) {
+        if (!hasStatusEffect(SmokeBombEffect.class)) {
             HP -= dmg;
             if (HP < 0) {
                 HP = 0;
@@ -110,7 +110,7 @@ public abstract class Combatant
             StatusEffect current = it.next();
             current.reduceDuration();
             if (current.isExpired()) {
-                removeStatusEffect(current);
+                current.remove(this);
                 it.remove();
             }
         }

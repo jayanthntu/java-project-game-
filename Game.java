@@ -17,13 +17,11 @@ public class Game {
         GameUI.displayMessage("=== TURN-BASED COMBAT ARENA ===");
 
         player = PlayerSelector.selectPlayer();
+        if (player instanceof CustomPlayer)
+            player = PlayerFactory.createCustomPlayer();
+
         playerBackup = player.copy();
         GameUI.showSelectedPlayer(player);
-
-        if (player instanceof CustomPlayer) {
-            player = PlayerFactory.createCustomPlayer();
-            playerBackup = new CustomPlayer(player);
-        }
 
         ItemSelector.selectItems(player);
 
@@ -57,8 +55,9 @@ public class Game {
         
         switch (choice) {
             case 1 -> {
-                ItemSelector.selectItems(playerBackup);
-                engine = new BattleEngine(playerBackup, currentLevelBackup);
+                player = playerBackup.copy();
+                ItemSelector.selectItems(player);
+                engine = new BattleEngine(player, currentLevelBackup);
                 runGame();
             }
             case 2 -> start();
