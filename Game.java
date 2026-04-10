@@ -1,10 +1,8 @@
 import combatant.CustomPlayer;
-import combatant.Player;
-import combatant.Warrior;
-import combatant.Wizard;
+import combatant.*;
 import engine.BattleEngine;
 import level.*;
-import ui.GameUI;
+import ui.*;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class Game {
         ui.showSelectedPlayer(player);
 
         if (player instanceof CustomPlayer) {
-            player = ui.createCustomPlayer();
+            player = PlayerFactory.createCustomPlayer();
             playerBackup = new CustomPlayer(player);
         }
 
@@ -74,7 +72,7 @@ public class Game {
         ui.displayMessage("\n1. Replay with same settings");
         ui.displayMessage("2. New game");
         ui.displayMessage("3. Exit");
-        int choice = ui.getPlayerInput(3);
+        int choice = InputHandler.getPlayerInput(3);
         switch (choice) {
             case 1 -> {
                 ui.selectItems(playerBackup);

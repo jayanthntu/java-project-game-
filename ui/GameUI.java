@@ -6,14 +6,9 @@ import item.*;
 import level.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
 
 public class GameUI {
     static final int MAXSPAWN = 5;
-    static final int MAXSTAT = 999;
-    private final Scanner scanner = new Scanner(System.in);
-
     public void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
         System.out.println("\n========== ROUND " + round + " ==========");
         for (Combatant c : combatants) {
@@ -67,7 +62,7 @@ public class GameUI {
             System.out.println(" (Cooldown: " + player.getSpecialSkillsCooldown() + " turns)");
         }
 
-        int choice = getPlayerInput(hasItems ? 4 : 3);
+        int choice = InputHandler.getPlayerInput(hasItems ? 4 : 3);
 
         if (hasItems) {
             return switch (choice) {
@@ -140,25 +135,6 @@ public class GameUI {
         return showActionMenu(player, aliveEnemies);
     }
 
-    public int getPlayerInput(int max) {
-        int input = -1;
-        while (input < 1 || input > max) {
-            System.out.print("Enter choice (1-" + max + "): ");
-            String userInput = scanner.nextLine().trim();
-
-            try {
-                input = Integer.parseInt(userInput);
-                if (input < 1 || input > max) {
-                    System.out.println("Invalid input, please enter input within valid range.");
-                    input = -1;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input, please enter input within valid range.");
-            }
-        }
-        return input;
-    }
-
     private Item selectItem(Player player) {
         List<Item> available = player.getItems().stream()
                 .filter(i -> !i.isUsed()).toList();
@@ -173,7 +149,7 @@ public class GameUI {
             System.out.println((i + 1) + ". " + available.get(i).getClass().getSimpleName());
         }
 
-        int choice = getPlayerInput(available.size());
+        int choice = InputHandler.getPlayerInput(available.size());
 
         try {
             Item selected = available.get(choice - 1);
@@ -195,7 +171,7 @@ public class GameUI {
         PrintDescribables.printDescribables("SELECT YOUR CHARACTER", availablePlayers, '|');
 
         System.out.println();
-        int choice = getPlayerInput(3);
+        int choice = InputHandler.getPlayerInput(3);
 
         return availablePlayers.get(choice-1);
     }
@@ -212,7 +188,7 @@ public class GameUI {
         for (int i = 1; i <= 2; i++)
         {
             System.out.print("\nSelect item " + i + ": ");
-            int choice = getPlayerInput(availableItems.size());
+            int choice = InputHandler.getPlayerInput(availableItems.size());
 
             Item selectedItem = availableItems.get(choice - 1).copy();
 
@@ -230,7 +206,7 @@ public class GameUI {
         PrintDescribables.printDescribables("Difficulties", difficulties);
 
         System.out.println();
-        int choice = getPlayerInput(difficulties.size());
+        int choice = InputHandler.getPlayerInput(difficulties.size());
         return difficulties.get(choice - 1);
     }
 
@@ -240,15 +216,15 @@ public class GameUI {
         System.out.println();
         System.out.println("=== INITIAL SPAWN ===");
         System.out.println("Choose the number of goblins (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(getPlayerInput(5));
+        customSettings.add(InputHandler.getPlayerInput(5));
         System.out.println("Choose the number of wolves (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(getPlayerInput(5));
+        customSettings.add(InputHandler.getPlayerInput(5));
         System.out.println();
         System.out.println("=== BACKUP SPAWN ===");
         System.out.println("Choose the number of goblins (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(getPlayerInput(5));
+        customSettings.add(InputHandler.getPlayerInput(5));
         System.out.println("Choose the number of wolves (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(getPlayerInput(5));
+        customSettings.add(InputHandler.getPlayerInput(5));
 
         return customSettings;
     }
@@ -260,35 +236,5 @@ public class GameUI {
     public void showSelectedPlayer(Player player) {
         System.out.println("Selected Player: " + player.getClass().getSimpleName());
         System.out.println();
-    }
-
-    public Player createCustomPlayer() {
-        System.out.println("=== CUSTOM PLAYER BUILDER ===");
-
-        // Select custom stats
-        System.out.print("NAME: ");
-        String name = scanner.nextLine().trim();
-        System.out.print("HP: ");
-        int hp = getPlayerInput(MAXSTAT);
-        System.out.print("ATK: ");
-        int atk = getPlayerInput(MAXSTAT);
-        System.out.print("DEF: ");
-        int def = getPlayerInput(MAXSTAT);
-        System.out.print("SPD: ");
-        int spd = getPlayerInput(MAXSTAT);
-
-        // Select specialskill
-        List<SpecialSkill> availableSpecialSkills = List.of(new ShieldBash(), new ArcaneBlast());
-
-        PrintDescribables.printDescribables("Choose Special Skill", availableSpecialSkills);
-        System.out.println();
-        int choice = getPlayerInput(availableSpecialSkills.size());
-
-        SpecialSkill selectedSpecialSkill = availableSpecialSkills.get(choice - 1);
-
-        System.out.println(selectedSpecialSkill.getName() + " selected!");
-        System.out.println("Custom Player Created!\n");
-
-        return new CustomPlayer(name, hp, atk, def, spd, selectedSpecialSkill);
     }
 }
