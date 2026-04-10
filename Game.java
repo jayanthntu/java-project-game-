@@ -31,9 +31,9 @@ public class Game {
             playerBackup = new CustomPlayer(player);
         }
 
-        ui.selectItems(player);
+        ItemSelector.selectItems(player);
 
-        Difficulty difficulty = ui.selectDifficulty();
+        Difficulty difficulty = DifficultySelector.selectDifficulty();
         ui.showDifficulty(difficulty);
 
         if (difficulty instanceof Custom) {
@@ -75,7 +75,7 @@ public class Game {
         int choice = InputHandler.getPlayerInput(3);
         switch (choice) {
             case 1 -> {
-                ui.selectItems(playerBackup);
+                ItemSelector.selectItems(playerBackup);
                 engine = new BattleEngine(playerBackup, currentLevelBackup, ui);
                 runGame();
             }

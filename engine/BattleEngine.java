@@ -4,6 +4,7 @@ import action.Action;
 import combatant.*;
 import level.Level;
 import ui.GameUI;
+import ui.ActionMenu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class BattleEngine {
             switch (current) {
                 case Player p -> {
                     List<Combatant> aliveEnemies = getAliveEnemies();
-                    Action action = ui.showActionMenu(p, aliveEnemies);
+                    Action action = ActionMenu.showActionMenu(p, aliveEnemies);
                     action.execute(p, aliveEnemies);
                     if (p.getSpecialSkillsCooldown() > 0) {
                         p.decrementSpecialSkillsCooldown();
