@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class GameUI {
+    static final int MAXSPAWN = 5;
+    static final int MAXSTAT = 999;
     private final Scanner scanner = new Scanner(System.in);
 
     public void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
@@ -18,7 +21,8 @@ public class GameUI {
                 System.out.println(c.getName() + " | HP: " + c.getHP() + "/" + c.getMaxHP()
                         + " | ATK: " + c.getAttack() + " | DEF: " + c.getDefense()
                         + " | SPD: " + c.getSpeed());
-            } else {
+            } 
+            else {
                 System.out.println(c.getName() + " [ELIMINATED]");
             }
         }
@@ -47,7 +51,8 @@ public class GameUI {
         if (hasItems) {
             System.out.println("3. Use Item");
             System.out.print("4. ");
-        } else {
+        } 
+        else {
             System.out.print("3. ");
         }
 
@@ -57,7 +62,8 @@ public class GameUI {
         System.out.print("Special Skill");
         if (skillReady) {
             System.out.println(" (Ready!)");
-        } else {
+        } 
+        else {
             System.out.println(" (Cooldown: " + player.getSpecialSkillsCooldown() + " turns)");
         }
 
@@ -96,7 +102,8 @@ public class GameUI {
                     yield new BasicAttack();
                 }
             };
-        } else {
+        } 
+        else {
             return switch (choice) {
                 case 1 -> {
                     System.out.println("Basic Attack selected!");
@@ -240,15 +247,15 @@ public class GameUI {
 
         System.out.println();
         System.out.println("=== INITIAL SPAWN ===");
-        System.out.println("Choose the number of goblins (Maximum: 5)");
+        System.out.println("Choose the number of goblins (Maximum: "+ MAXSPAWN + ")");
         customSettings.add(getPlayerInput(5));
-        System.out.println("Choose the number of wolves (Maximum: 5)");
+        System.out.println("Choose the number of wolves (Maximum: "+ MAXSPAWN + ")");
         customSettings.add(getPlayerInput(5));
         System.out.println();
         System.out.println("=== BACKUP SPAWN ===");
-        System.out.println("Choose the number of goblins (Maximum: 5)");
+        System.out.println("Choose the number of goblins (Maximum: "+ MAXSPAWN + ")");
         customSettings.add(getPlayerInput(5));
-        System.out.println("Choose the number of wolves (Maximum: 5)");
+        System.out.println("Choose the number of wolves (Maximum: "+ MAXSPAWN + ")");
         customSettings.add(getPlayerInput(5));
 
         return customSettings;
@@ -264,29 +271,28 @@ public class GameUI {
     }
 
     public Player createCustomPlayer() {
-        System.out.println("=== CUSTOM PLAYER BUILDER===");
+        System.out.println("=== CUSTOM PLAYER BUILDER ===");
+        //selecting custom stats
         System.out.println("NAME:");
         String name = scanner.nextLine().trim();
         System.out.println("HP:");
-        int hp = getPlayerInput(999);
-        System.out.println("ATTACK:");
-        int atk = getPlayerInput(999);
-        System.out.println("DEFENCE:");
-        int def = getPlayerInput(999);
-        System.out.println("SPEED:");
-        int spd = getPlayerInput(999);
-        System.out.println("Choose Special Skill:");
-        System.out.println("1. Shield Bash");
-        System.out.println("2. Arcane Blast");
-        SpecialSkill specialSkill = switch (getPlayerInput(2)) {
-            case 1 -> new ShieldBash();
-            case 2 -> new ArcaneBlast();
-            default -> {
-                System.out.println("Invalid Input");
-                yield new CustomSkill();
-            }
-        };
+        int hp = getPlayerInput(MAXSTAT);
+        System.out.println("ATK:");
+        int atk = getPlayerInput(MAXSTAT);
+        System.out.println("DEF:");
+        int def = getPlayerInput(MAXSTAT);
+        System.out.println("SPD:");
+        int spd = getPlayerInput(MAXSTAT);
+        //selecting specialskill 
+        List<SpecialSkill> availableSpecialSkills = List.of( new ShieldBash(), new ArcaneBlast());
+
+        PrintDescribables.printDescribables("Choose Special Skill:", availableSpecialSkills);
+        int choice = getPlayerInput(availableSpecialSkills.size());
+        SpecialSkill selectedSpecialSkill = availableSpecialSkills.get(choice - 1);
+
+        System.out.println(selectedSpecialSkill.getName() + " selected!");
         System.out.println("Custom Player Created!");
-        return new CustomPlayer(name, hp, atk, def, spd, specialSkill);
+
+        return new CustomPlayer(name, hp, atk, def, spd, selectedSpecialSkill);
     }
 }
