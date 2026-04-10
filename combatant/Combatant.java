@@ -69,7 +69,7 @@ public abstract class Combatant
     public void decreaseDefense(int def) { DEF -= def; }
 
     public void takeDamage(int dmg) {
-        if (statusEffects.stream().noneMatch(e -> e instanceof SmokeBombEffect)) {
+        if (hasStatusEffect(SmokeBombEffect.class)) {
             HP -= dmg;
             if (HP < 0) {
                 HP = 0;
@@ -90,6 +90,10 @@ public abstract class Combatant
 
     public List<StatusEffect> getStatusEffects() {
         return statusEffects;
+    }
+
+    public boolean hasStatusEffect(Class<? extends StatusEffect> type) {
+        return statusEffects.stream().anyMatch(type::isInstance);
     }
 
     public void addStatusEffect(StatusEffect effect) {

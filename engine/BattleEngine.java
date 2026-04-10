@@ -2,6 +2,7 @@ package engine;
 
 import action.Action;
 import combatant.*;
+import effect.StunEffect;
 import level.Level;
 import ui.GameUI;
 import ui.ActionMenu;
@@ -35,7 +36,7 @@ public class BattleEngine {
             if (current.isDefeated()) continue;
 
             // Check if stunned (stun skips turn)
-            if (current.isStunned()) {
+            if (current.hasStatusEffect(StunEffect.class)) {
             GameUI.displayMessage(current.getName() + " is STUNNED - turn skipped.");
                 continue;
             }
@@ -45,7 +46,7 @@ public class BattleEngine {
                     List<Combatant> aliveEnemies = getAliveEnemies();
                     Action action = ActionMenu.showActionMenu(p, aliveEnemies);
                     action.execute(p, aliveEnemies);
-                    if (p.getSpecialSkillsCooldown() > 0) {
+                    if (p.getSpecialSkillCooldown() > 0) {
                         p.decrementSpecialSkillsCooldown();
                     }
                 }
