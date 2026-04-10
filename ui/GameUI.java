@@ -3,7 +3,7 @@ package ui;
 import action.*;
 import combatant.*;
 import item.*;
-import level.Difficulty;
+import level.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -224,22 +224,12 @@ public class GameUI {
     }
 
     public Difficulty selectDifficulty() {
+        List<Difficulty> difficulties = List.of(new Easy(), new Medium(), new Hard(), new Custom());
         System.out.println("\n=== SELECT DIFFICULTY ===");
-        System.out.println("1. Easy   - 3 Goblins");
-        System.out.println("2. Medium - 1 Goblin + 1 Wolf    | Backup: 2 Wolves");
-        System.out.println("3. Hard   - 2 Goblins            | Backup: 1 Goblin + 2 Wolves");
-        System.out.println("4. Custom - ? Goblins + ? Wolves | Backup: ? Goblins + ? Wolves");
+        PrintDescribables.printDescribables("Difficulties", difficulties);
 
-        return switch (getPlayerInput(4)) {
-            case 1 -> Difficulty.EASY;
-            case 2 -> Difficulty.MEDIUM;
-            case 3 -> Difficulty.HARD;
-            case 4 -> Difficulty.CUSTOM;
-            default -> {
-                System.out.println("Invalid input, please enter input within valid range.");
-                yield selectDifficulty();
-            }
-        };
+        int choice = getPlayerInput(difficulties.size());
+        return difficulties.get(choice - 1);
     }
 
     public List<Integer> createCustomLevel() {
