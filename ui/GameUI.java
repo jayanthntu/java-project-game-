@@ -262,7 +262,8 @@ public class GameUI {
 
     public Player createCustomPlayer() {
         System.out.println("=== CUSTOM PLAYER BUILDER ===");
-        //selecting custom stats
+
+        // Select custom stats
         System.out.println("NAME:");
         String name = scanner.nextLine().trim();
         System.out.println("HP:");
@@ -273,7 +274,8 @@ public class GameUI {
         int def = getPlayerInput(MAXSTAT);
         System.out.println("SPD:");
         int spd = getPlayerInput(MAXSTAT);
-        //selecting specialskill 
+
+        // Select specialskill
         List<SpecialSkill> availableSpecialSkills = List.of( new ShieldBash(), new ArcaneBlast());
 
         PrintDescribables.printDescribables("Choose Special Skill:", availableSpecialSkills);
