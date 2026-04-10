@@ -55,7 +55,6 @@ public class BattleEngine {
                 }
                 default -> throw new IllegalStateException("Unexpected combatant type: " + current.getClass());
             }
-
             if (isOver()) return;
         }
 
@@ -90,8 +89,8 @@ public class BattleEngine {
 
     private List<Combatant> getAliveEnemies() {
         return combatants.stream()
-                .filter(c -> c instanceof Enemy && !c.isDefeated())
-                .collect(Collectors.toList());
+            .filter(c -> c instanceof Enemy && !c.isDefeated())
+            .collect(Collectors.toList());
     }
 
     public Player getPlayer() { return player; }
