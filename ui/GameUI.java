@@ -264,15 +264,15 @@ public class GameUI {
         System.out.println("=== CUSTOM PLAYER BUILDER ===");
 
         // Select custom stats
-        System.out.println("NAME:");
+        System.out.print("NAME: ");
         String name = scanner.nextLine().trim();
-        System.out.println("HP:");
+        System.out.print("HP: ");
         int hp = getPlayerInput(MAXSTAT);
-        System.out.println("ATK:");
+        System.out.print("ATK: ");
         int atk = getPlayerInput(MAXSTAT);
-        System.out.println("DEF:");
+        System.out.print("DEF: ");
         int def = getPlayerInput(MAXSTAT);
-        System.out.println("SPD:");
+        System.out.print("SPD: ");
         int spd = getPlayerInput(MAXSTAT);
 
         // Select specialskill
