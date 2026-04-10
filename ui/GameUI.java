@@ -1,13 +1,14 @@
 package ui;
 
 import combatant.*;
+import engine.BattleEngine;
 import item.*;
 import level.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameUI {
-    public static void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
+    public static void displayBattleStatus(List<Combatant> combatants, int round, Player player) {
         System.out.println("\n========== ROUND " + round + " ==========");
         for (Combatant c : combatants) {
             if (!c.isDefeated()) {
@@ -20,7 +21,7 @@ public class GameUI {
             }
         }
         System.out.println("===================================");
-        displayItems((Player) player);
+        displayItems(player);
         System.out.println("===================================");
     }
 
@@ -46,5 +47,22 @@ public class GameUI {
     public static void showSelectedPlayer(Player player) {
         System.out.println("Selected Player: " + player.getClass().getSimpleName());
         System.out.println();
+    }
+
+    public static void showResult(BattleEngine engine) {
+        if (engine.playerWon()) {
+            displayMessage("\n*** VICTORY! Congratulations, you have defeated all your enemies! ***");
+            displayMessage("Remaining HP: " + engine.getPlayer().getHP()
+                    + " | Total Rounds: " + engine.getRoundCount());
+        } else {
+            displayMessage("\n*** DEFEATED. Don't give up, try again! ***");
+            displayMessage("Total Rounds Survived: " + engine.getRoundCount());
+        }
+    }
+
+    public static void restartMenu() {
+        displayMessage("\n1. Replay with same settings");
+        displayMessage("2. New game");
+        displayMessage("3. Exit");
     }
 }

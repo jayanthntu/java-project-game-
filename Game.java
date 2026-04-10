@@ -13,14 +13,11 @@ public class Game {
     private Player player;
     private Player playerBackup;
 
-    public Game() {}
-
     public void start() {
         GameUI.displayMessage("=== TURN-BASED COMBAT ARENA ===");
 
         player = PlayerSelector.selectPlayer();
         playerBackup = player.copy();
-
         GameUI.showSelectedPlayer(player);
 
         if (player instanceof CustomPlayer) {
@@ -50,26 +47,14 @@ public class Game {
         while (!engine.isOver()) {
             engine.runRound();
         }
-        showResult();
-    }
-
-    public void showResult() {
-        if (engine.playerWon()) {
-            GameUI.displayMessage("\n*** VICTORY! Congratulations, you have defeated all your enemies! ***");
-            GameUI.displayMessage("Remaining HP: " + engine.getPlayer().getHP()
-                    + " | Total Rounds: " + engine.getRoundCount());
-        } else {
-            GameUI.displayMessage("\n*** DEFEATED. Don't give up, try again! ***");
-            GameUI.displayMessage("Total Rounds Survived: " + engine.getRoundCount());
-        }
+        GameUI.showResult(engine);
         restart();
     }
 
-    public void restart() {
-        GameUI.displayMessage("\n1. Replay with same settings");
-        GameUI.displayMessage("2. New game");
-        GameUI.displayMessage("3. Exit");
+    private void restart() {
+        GameUI.restartMenu();
         int choice = InputHandler.getPlayerInput(3);
+        
         switch (choice) {
             case 1 -> {
                 ItemSelector.selectItems(playerBackup);
