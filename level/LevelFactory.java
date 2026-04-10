@@ -6,23 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelFactory {
-    private static final List<Difficulty> DIFFICULTIES = List.of(new Easy(), new Medium(), new Hard(), new Custom());
-
-    public static Level create(Difficulty difficulty) {
-        return switch (difficulty) {
-            case EASY -> new Level(difficulty,
-                    List.of(new Goblin("Goblin A"), new Goblin("Goblin B"), new Goblin("Goblin C")),
-                    List.of());
-            case MEDIUM -> new Level(difficulty,
-                    List.of(new Goblin("Goblin A"), new Wolf("Wolf A")),
-                    List.of(new Wolf("Wolf B"), new Wolf("Wolf C")));
-            case HARD -> new Level(difficulty,
-                    List.of(new Goblin("Goblin A"), new Goblin("Goblin B")),
-                    List.of(new Goblin("Goblin C"), new Wolf("Wolf A"), new Wolf("Wolf B")));
-            default -> new Level(difficulty,
-                    List.of(new Goblin("Goblin A"), new Goblin("Goblin B"), new Goblin("Goblin C")),
-                    List.of());
+    public static Level create(Difficulty.TYPE difficultyType) {
+        Difficulty difficulty =  switch (difficultyType) {
+            case EASY -> new Easy();
+            case MEDIUM -> new Medium();
+            case HARD -> new Hard();
+            default -> new Easy();
         };
+        return new Level(difficultyType, difficulty.getInitialSpawn(), difficulty.getBackupSpawn());
     }
     public static Level createCustom(List<Integer> customSettings) {
         int initGoblins  = customSettings.get(0);
@@ -38,6 +29,6 @@ public class LevelFactory {
         for (int i = 0; i < backupGoblins; i++) backupSpawns.add(new Goblin("Goblin " + (char)('A' + i)));
         for (int i = 0; i < backupWolves; i++) backupSpawns.add(new Wolf("Wolf "    + (char)('A' + i)));
 
-        return new Level(Difficulty.CUSTOM, initialSpawns, backupSpawns);
+        return new Level(Difficulty.TYPE.CUSTOM, initialSpawns, backupSpawns);
     }
 }
