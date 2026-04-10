@@ -17,7 +17,8 @@ public class BasicAttack implements Action {
             target.takeDamage(dmg);
             System.out.println(target.getName() + " HP: "
                     + target.getHP() + "/" + target.getMaxHP());
-        } else {
+        }
+        else {
             System.out.println(user.getName() + " attacks " + target.getName()
                     + "! Damage: 0 (Smoke bomb active)");
         }
