@@ -1,7 +1,7 @@
 package level;
 
-public class Easy implements Difficulty {
-    private static final String NAME = "MEDIUM";
+public class Medium implements Difficulty {
+    private static final String NAME = "Medium";
     private static final String DESCRIPTION = "1 Goblin + 1 Wolf    | Backup: 2 Wolves";
 
     @Override
