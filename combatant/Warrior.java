@@ -11,6 +11,12 @@ public class Warrior extends Player
 
     public Warrior(Player player) {
         super(player);
+        specialSkill = new ShieldBash();
+    }
+
+    @Override
+    public Player copy() {
+        return Warrior(this);
     }
 
     public Warrior(String name)

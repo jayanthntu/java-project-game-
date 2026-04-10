@@ -28,4 +28,9 @@ public class ShieldBash implements SpecialSkill {
     public String getDescription() {
         return DESCRIPTION;
     }
+
+    @Override
+    public SpecialSkill copy() {
+        return new ShieldBash();
+    }
 }

@@ -20,9 +20,10 @@ public abstract class Player extends Combatant implements Describable
 
     public Player(Player other) {
         super(other.getName(), other.getMaxHP(), other.getHP(), other.getAttack(), other.getDefense(), other.getSpeed());
-        specialSkill = other.getSpecialSkill();
         items = new ArrayList<>();
     }
+
+    public abstract Player copy();
 
     public void setItems(List<Item> items) {
         this.items = items;

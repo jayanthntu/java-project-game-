@@ -11,13 +11,13 @@ public class CustomPlayer extends Player
         specialSkill = new CustomSkill();
     }
 
-    public CustomPlayer(String name, int HP, int atk, int def, int spd, SpecialSkill specialSkill)
-    {
+    public CustomPlayer(String name, int HP, int atk, int def, int spd, SpecialSkill specialSkill) {
         super(name, HP, HP, atk, def, spd);
-        this.specialSkill =  specialSkill;
+        this.specialSkill = specialSkill;
     }
 
     public CustomPlayer(Player other) {
         super(other);
+
     }
 }

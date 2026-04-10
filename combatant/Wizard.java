@@ -11,6 +11,12 @@ public class Wizard extends Player
 
     public Wizard(Player player) {
         super(player);
+        specialSkill = new ArcaneBlast();
+    }
+
+    @Override
+    public Player copy() {
+        return Wizard(this);
     }
 
     public Wizard(String name)

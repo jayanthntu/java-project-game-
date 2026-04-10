@@ -39,4 +39,9 @@ public class ArcaneBlast implements SpecialSkill
     public String getDescription() {
         return DESCRIPTION;
     }
+
+    @Override
+    public SpecialSkill copy() {
+        return new ArcaneBlast();
+    }
 }
