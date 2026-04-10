@@ -1,9 +1,7 @@
 package engine;
 
 import action.Action;
-import combatant.Combatant;
-import combatant.Enemy;
-import combatant.Player;
+import combatant.*;
 import level.Level;
 import ui.GameUI;
 import java.util.ArrayList;
