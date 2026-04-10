@@ -9,12 +9,12 @@ public class SmokeBombEffect extends StatusEffect {
 
     @Override
     public void apply(Combatant target) {
-        target.setInvulnerable(true);
+        target.addStatusEffect(this);
     }
 
     @Override
     public void remove(Combatant target) {
-        target.setInvulnerable(false);
+        target.removeStatusEffect(this);
     }
 
     @Override

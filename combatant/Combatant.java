@@ -1,6 +1,6 @@
 package combatant;
 
-import effect.StatusEffect;
+import effect.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,9 +13,7 @@ public abstract class Combatant
     private int ATK;
     private int DEF;
     private final int SPD;
-    private final List<StatusEffect> statusEffect;
-    private boolean stunned;
-    private boolean invulnerable;
+    private final List<StatusEffect> statusEffects;
 
     public Combatant(String username, int maxHP, int HP, int ATK, int DEF, int SPD) {
         this.name = username;
@@ -24,9 +22,7 @@ public abstract class Combatant
         this.ATK = ATK;
         this.DEF = DEF;
         this.SPD = SPD;
-        this.statusEffect = new ArrayList<>();
-        this.stunned = false;
-        this.invulnerable = false;
+        this.statusEffects = new ArrayList<>();
     }
 
     public String getName() 
@@ -72,18 +68,8 @@ public abstract class Combatant
 
     public void decreaseDefense(int def) { DEF -= def; }
 
-    public boolean isInvulnerable() { return invulnerable; }
-
-    public void setInvulnerable(boolean invulnerable) {
-        this.invulnerable = invulnerable;
-    }
-
-    public boolean isStunned() { return stunned; }
-
-    public void setStunned(boolean stun) { this.stunned = stun; }
-
     public void takeDamage(int dmg) {
-        if (!invulnerable) {
+        if (statusEffects.stream().noneMatch(e -> e instanceof SmokeBombEffect)) {
             HP -= dmg;
             if (HP < 0) {
                 HP = 0;
@@ -91,7 +77,9 @@ public abstract class Combatant
         }
     }
 
-    public boolean isDefeated() { return HP <= 0; }
+    public boolean isDefeated() {
+        return HP <= 0;
+    }
 
     public void heal(int amount) {
         HP += amount;
@@ -100,19 +88,20 @@ public abstract class Combatant
         }
     }
 
-    public List<StatusEffect> getStatusEffect() { return statusEffect; }
+    public List<StatusEffect> getStatusEffects() {
+        return statusEffects;
+    }
 
     public void addStatusEffect(StatusEffect effect) {
-        statusEffect.add(effect);
-        effect.apply(this);
+        statusEffects.add(effect);
     }
 
     public void removeStatusEffect(StatusEffect effect) {
-        effect.remove(this);
+        statusEffects.remove(effect);
     }
 
     public void tickStatusEffects() {
-        Iterator<StatusEffect> it = statusEffect.iterator();
+        Iterator<StatusEffect> it = statusEffects.iterator();
         while (it.hasNext()) {
             StatusEffect current = it.next();
             current.reduceDuration();

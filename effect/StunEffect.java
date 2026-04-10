@@ -9,12 +9,12 @@ public class StunEffect extends StatusEffect {
 
     @Override
     public void apply(Combatant target) {
-        target.setStunned(true);
+        target.addStatusEffect(this);
     }
 
     @Override
     public void remove(Combatant target) {
-        target.setStunned(false);
+        target.removeStatusEffect(this);
     }
 
     @Override
