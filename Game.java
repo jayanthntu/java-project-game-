@@ -37,7 +37,7 @@ public class Game {
         ui.showDifficulty(difficulty);
 
         if (difficulty instanceof Custom) {
-            List<Integer> customLevelSettings = ui.createCustomLevel();
+            List<Integer> customLevelSettings = CustomLevelFactory.createCustomLevel();
             currentLevel = LevelFactory.createCustom(customLevelSettings);
             currentLevelBackup = LevelFactory.createCustom(customLevelSettings);
         } else {
