@@ -3,14 +3,8 @@ package level;
 import java.util.List;
 
 public class LevelFactory {
-    public static Level create(Difficulty.TYPE difficultyType) {
-        Difficulty difficulty =  switch (difficultyType) {
-            case EASY -> new Easy();
-            case MEDIUM -> new Medium();
-            case HARD -> new Hard();
-            default -> new Easy();
-        };
-        return new Level(difficultyType, difficulty.getInitialSpawn(), difficulty.getBackupSpawn());
+    public static Level create(Difficulty difficulty) {
+        return new Level(difficulty, difficulty.getInitialSpawn(), difficulty.getBackupSpawn());
     }
 
     public static Level createCustom(List<Integer> customSettings) {
@@ -23,6 +17,6 @@ public class LevelFactory {
         difficulty.setInitialSpawn(initGoblins, initWolves);
         difficulty.setBackupSpawn(backupGoblins, backupWolves);
 
-        return new Level(Difficulty.TYPE.CUSTOM, difficulty.getInitialSpawn(), difficulty.getBackupSpawn());
+        return new Level(difficulty, difficulty.getInitialSpawn(), difficulty.getBackupSpawn());
     }
 }

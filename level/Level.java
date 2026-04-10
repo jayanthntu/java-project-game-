@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
-    private final Difficulty.TYPE difficulty;
+    private final Difficulty difficulty;
     private final List<Enemy> initialSpawn;
     private final List<Enemy> backupSpawn;
     private boolean backupSpawned = false;
 
-    public Level(Difficulty.TYPE difficulty, List<Enemy> initialSpawn, List<Enemy> backupSpawn) {
+    public Level(Difficulty difficulty, List<Enemy> initialSpawn, List<Enemy> backupSpawn) {
         this.difficulty = difficulty;
         this.initialSpawn = initialSpawn;
         this.backupSpawn = backupSpawn;
@@ -33,7 +33,7 @@ public class Level {
         return initialSpawn; 
     }
 
-    public Difficulty.TYPE getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 }

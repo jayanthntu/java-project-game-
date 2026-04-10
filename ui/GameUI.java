@@ -225,7 +225,7 @@ public class GameUI {
 
     public Difficulty selectDifficulty() {
         List<Difficulty> difficulties = List.of(new Easy(), new Medium(), new Hard(), new Custom());
-        System.out.println("\n=== SELECT DIFFICULTY ===");
+        System.out.println("\nSELECT DIFFICULTY");
         PrintDescribables.printDescribables("Difficulties", difficulties);
 
         int choice = getPlayerInput(difficulties.size());
