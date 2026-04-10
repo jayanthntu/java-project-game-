@@ -194,6 +194,7 @@ public class GameUI {
         List<Player> availablePlayers = List.of(new Warrior(), new Wizard(), new CustomPlayer() );
         PrintDescribables.printDescribables("SELECT YOUR CHARACTER", availablePlayers, '|');
 
+        System.out.println();
         int choice = getPlayerInput(3);
 
         return availablePlayers.get(choice-1);
@@ -210,7 +211,7 @@ public class GameUI {
 
         for (int i = 1; i <= 2; i++)
         {
-            System.out.println("\nSelect item " + i + ":");
+            System.out.print("\nSelect item " + i + ": ");
             int choice = getPlayerInput(availableItems.size());
 
             Item selectedItem = availableItems.get(choice - 1).copy();
@@ -228,6 +229,7 @@ public class GameUI {
         System.out.println("\nSELECT DIFFICULTY");
         PrintDescribables.printDescribables("Difficulties", difficulties);
 
+        System.out.println();
         int choice = getPlayerInput(difficulties.size());
         return difficulties.get(choice - 1);
     }
@@ -278,12 +280,14 @@ public class GameUI {
         // Select specialskill
         List<SpecialSkill> availableSpecialSkills = List.of(new ShieldBash(), new ArcaneBlast());
 
-        PrintDescribables.printDescribables("Choose Special Skill:", availableSpecialSkills);
+        PrintDescribables.printDescribables("Choose Special Skill", availableSpecialSkills);
+        System.out.println();
         int choice = getPlayerInput(availableSpecialSkills.size());
+
         SpecialSkill selectedSpecialSkill = availableSpecialSkills.get(choice - 1);
 
         System.out.println(selectedSpecialSkill.getName() + " selected!");
-        System.out.println("Custom Player Created!");
+        System.out.println("Custom Player Created!\n");
 
         return new CustomPlayer(name, hp, atk, def, spd, selectedSpecialSkill);
     }
