@@ -18,7 +18,7 @@ public class PowerStone extends Item
         if (actor instanceof Player player) 
         {
             // Trigger special skill effect without touching cooldown
-            player.useSpecialSkillEffectWithoutCD(targets);
+            player.useSpecialSkillWithoutCD(targets);
             setUsed(true);
             System.out.println(actor.getName()
                     + " used Power Stone! Special skill triggered for free!");

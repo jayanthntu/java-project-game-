@@ -16,7 +16,6 @@ public abstract class Combatant
     private final List<StatusEffect> statusEffect;
     private boolean stunned;
     private boolean invulnerable;
-    private int specialSkillsCooldown;
 
     public Combatant(String username, int maxHP, int HP, int ATK, int DEF, int SPD) {
         this.name = username;
@@ -28,7 +27,6 @@ public abstract class Combatant
         this.statusEffect = new ArrayList<>();
         this.stunned = false;
         this.invulnerable = false;
-        this.specialSkillsCooldown = 0;
     }
 
     public String getName() 
@@ -83,12 +81,6 @@ public abstract class Combatant
     public boolean isStunned() { return stunned; }
 
     public void setStunned(boolean stun) { this.stunned = stun; }
-
-    public int getSpecialSkillsCooldown() { return specialSkillsCooldown; }
-
-    public void setSpecialSkillsCooldown(int cooldown) { specialSkillsCooldown = cooldown; }
-
-    public void decrementSpecialSkillsCooldown() { specialSkillsCooldown -= 1; }
 
     public void takeDamage(int dmg) {
         if (!invulnerable) {

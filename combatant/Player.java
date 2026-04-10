@@ -11,6 +11,7 @@ public abstract class Player extends Combatant implements Describable
 {
     private List<Item> items;
     protected SpecialSkill specialSkill;
+    private int specialSkillCooldown = 0;
 
     public Player(String name, int maxHP, int HP, int ATK, int DEF, int SPD) 
     {
@@ -35,24 +36,36 @@ public abstract class Player extends Combatant implements Describable
     }
 
     public final void useSpecialSkillWithCD(List<Combatant> targets) {
-        if (getSpecialSkillsCooldown() == 0) {
-            useSpecialSkills(targets);
+        if (getSpecialSkillCooldown() == 0) {
+            useSpecialSkill(targets);
             setSpecialSkillsCooldown(3);
         }
     }
 
-    public final void useSpecialSkillEffectWithoutCD(List<Combatant> targets) {
-        int cooldown = getSpecialSkillsCooldown();
-        useSpecialSkills(targets);
+    public final void useSpecialSkillWithoutCD(List<Combatant> targets) {
+        int cooldown = getSpecialSkillCooldown();
+        useSpecialSkill(targets);
         setSpecialSkillsCooldown(cooldown);
     }
 
-    void useSpecialSkills(List<Combatant> targets) {
+    private void useSpecialSkill(List<Combatant> targets) {
         specialSkill.execute(this, targets);
     }
 
     public SpecialSkill getSpecialSkill() {
         return specialSkill;
+    }
+
+    public int getSpecialSkillCooldown() {
+        return specialSkillCooldown;
+    }
+
+    public void setSpecialSkillsCooldown(int cooldown) {
+        specialSkillCooldown = cooldown;
+    }
+
+    public void decrementSpecialSkillsCooldown() {
+        specialSkillCooldown -= 1;
     }
 
     @Override
