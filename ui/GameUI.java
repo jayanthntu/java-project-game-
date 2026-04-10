@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameUI {
-    static final int MAXSPAWN = 5;
     public void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
         System.out.println("\n========== ROUND " + round + " ==========");
         for (Combatant c : combatants) {
@@ -208,25 +207,6 @@ public class GameUI {
         System.out.println();
         int choice = InputHandler.getPlayerInput(difficulties.size());
         return difficulties.get(choice - 1);
-    }
-
-    public List<Integer> createCustomLevel() {
-        List<Integer> customSettings = new ArrayList<>();
-
-        System.out.println();
-        System.out.println("=== INITIAL SPAWN ===");
-        System.out.println("Choose the number of goblins (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(InputHandler.getPlayerInput(5));
-        System.out.println("Choose the number of wolves (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(InputHandler.getPlayerInput(5));
-        System.out.println();
-        System.out.println("=== BACKUP SPAWN ===");
-        System.out.println("Choose the number of goblins (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(InputHandler.getPlayerInput(5));
-        System.out.println("Choose the number of wolves (Maximum: "+ MAXSPAWN + ")");
-        customSettings.add(InputHandler.getPlayerInput(5));
-
-        return customSettings;
     }
 
     public void showDifficulty(Difficulty difficulty) {
