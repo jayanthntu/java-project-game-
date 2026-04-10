@@ -2,8 +2,7 @@ package combatant;
 
 import action.ShieldBash;
 
-public class Warrior extends Player 
-{
+public class Warrior extends Player {
     public Warrior() {
         super("Warrior", 260, 260, 40, 20, 30);
         specialSkill = new ShieldBash();
@@ -11,16 +10,14 @@ public class Warrior extends Player
 
     public Warrior(Player player) {
         super(player);
-        specialSkill = new ShieldBash();
     }
 
     @Override
     public Player copy() {
-        return Warrior(this);
+        return new Warrior(this);
     }
 
-    public Warrior(String name)
-    {
+    public Warrior(String name) {
         super(name, 260, 260, 40, 20, 30);
         specialSkill = new ShieldBash();
     }

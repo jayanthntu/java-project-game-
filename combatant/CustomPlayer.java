@@ -4,8 +4,7 @@ import action.CustomSkill;
 import action.SpecialSkill;
 
 
-public class CustomPlayer extends Player
-{
+public class CustomPlayer extends Player {
     public CustomPlayer() {
         super("???", 999, 999, 999, 999, 999);
         specialSkill = new CustomSkill();
@@ -18,6 +17,10 @@ public class CustomPlayer extends Player
 
     public CustomPlayer(Player other) {
         super(other);
+    }
 
+    @Override
+    public Player copy() {
+        return new CustomPlayer(this);
     }
 }
