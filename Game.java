@@ -21,7 +21,7 @@ public class Game {
     public void start() {
         ui.displayMessage("=== TURN-BASED COMBAT ARENA ===");
 
-        player = ui.selectPlayer();
+        player = PlayerSelector.selectPlayer();
         playerBackup = (player instanceof Warrior) ? new Warrior(player) : new Wizard(player);
 
         ui.showSelectedPlayer(player);
