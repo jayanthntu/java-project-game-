@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameUI {
-    public void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
+    public static void displayBattleStatus(List<Combatant> combatants, int round, Combatant player) {
         System.out.println("\n========== ROUND " + round + " ==========");
         for (Combatant c : combatants) {
             if (!c.isDefeated()) {
@@ -24,7 +24,7 @@ public class GameUI {
         System.out.println("===================================");
     }
 
-    public void displayItems(Player player) {
+    public static void displayItems(Player player) {
         System.out.print("Items: ");
         List<String> itemStatus = new ArrayList<>();
         for (Item item : player.getItems()) {
@@ -35,15 +35,15 @@ public class GameUI {
         System.out.println(String.join(" | ", itemStatus));
     }
 
-    public void displayMessage(String message) {
+    public static void displayMessage(String message) {
         System.out.println(message);
     }
 
-    public void showDifficulty(Difficulty difficulty) {
+    public static void showDifficulty(Difficulty difficulty) {
         System.out.println("Difficulty Level: " + difficulty);
     }
 
-    public void showSelectedPlayer(Player player) {
+    public static void showSelectedPlayer(Player player) {
         System.out.println("Selected Player: " + player.getClass().getSimpleName());
         System.out.println();
     }

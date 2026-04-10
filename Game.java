@@ -9,22 +9,19 @@ import java.util.List;
 public class Game {
     private Level currentLevel;
     private Level currentLevelBackup;
-    private final GameUI ui;
     private BattleEngine engine;
     private Player player;
     private Player playerBackup;
 
-    public Game() {
-        this.ui = new GameUI();
-    }
+    public Game() {}
 
     public void start() {
-        ui.displayMessage("=== TURN-BASED COMBAT ARENA ===");
+        GameUI.displayMessage("=== TURN-BASED COMBAT ARENA ===");
 
         player = PlayerSelector.selectPlayer();
         playerBackup = (player instanceof Warrior) ? new Warrior(player) : new Wizard(player);
 
-        ui.showSelectedPlayer(player);
+        GameUI.showSelectedPlayer(player);
 
         if (player instanceof CustomPlayer) {
             player = PlayerFactory.createCustomPlayer();
@@ -34,7 +31,7 @@ public class Game {
         ItemSelector.selectItems(player);
 
         Difficulty difficulty = DifficultySelector.selectDifficulty();
-        ui.showDifficulty(difficulty);
+        GameUI.showDifficulty(difficulty);
 
         if (difficulty instanceof Custom) {
             List<Integer> customLevelSettings = CustomLevelFactory.createCustomLevel();
@@ -45,7 +42,7 @@ public class Game {
             currentLevelBackup = LevelFactory.create(difficulty);
         }
 
-        engine = new BattleEngine(player, currentLevel, ui);
+        engine = new BattleEngine(player, currentLevel);
         runGame();
     }
 
@@ -58,30 +55,30 @@ public class Game {
 
     public void showResult() {
         if (engine.playerWon()) {
-            ui.displayMessage("\n*** VICTORY! Congratulations, you have defeated all your enemies! ***");
-            ui.displayMessage("Remaining HP: " + engine.getPlayer().getHP()
+            GameUI.displayMessage("\n*** VICTORY! Congratulations, you have defeated all your enemies! ***");
+            GameUI.displayMessage("Remaining HP: " + engine.getPlayer().getHP()
                     + " | Total Rounds: " + engine.getRoundCount());
         } else {
-            ui.displayMessage("\n*** DEFEATED. Don't give up, try again! ***");
-            ui.displayMessage("Total Rounds Survived: " + engine.getRoundCount());
+            GameUI.displayMessage("\n*** DEFEATED. Don't give up, try again! ***");
+            GameUI.displayMessage("Total Rounds Survived: " + engine.getRoundCount());
         }
         restart();
     }
 
     public void restart() {
-        ui.displayMessage("\n1. Replay with same settings");
-        ui.displayMessage("2. New game");
-        ui.displayMessage("3. Exit");
+        GameUI.displayMessage("\n1. Replay with same settings");
+        GameUI.displayMessage("2. New game");
+        GameUI.displayMessage("3. Exit");
         int choice = InputHandler.getPlayerInput(3);
         switch (choice) {
             case 1 -> {
                 ItemSelector.selectItems(playerBackup);
-                engine = new BattleEngine(playerBackup, currentLevelBackup, ui);
+                engine = new BattleEngine(playerBackup, currentLevelBackup);
                 runGame();
             }
             case 2 -> start();
             case 3 -> {
-                ui.displayMessage("Thanks for playing!");
+                GameUI.displayMessage("Thanks for playing!");
                 System.exit(0);
             }
         }

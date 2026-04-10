@@ -14,13 +14,11 @@ public class BattleEngine {
     private final TurnOrderStrategy strategy;
     private final Player player;
     private final Level level;
-    private final GameUI ui;
     private int roundCount = 0;
 
-    public BattleEngine(Player player, Level level, GameUI ui) {
+    public BattleEngine(Player player, Level level) {
         this.player = player;
         this.level = level;
-        this.ui = ui;
         this.strategy = new SpeedBasedTurnOrder();
         this.combatants = new ArrayList<>();
         this.combatants.add(player);
@@ -29,7 +27,7 @@ public class BattleEngine {
 
     public void runRound() {
         roundCount++;
-        ui.displayBattleStatus(combatants, roundCount, player);
+        GameUI.displayBattleStatus(combatants, roundCount, player);
 
         List<Combatant> order = strategy.determineTurnOrder(combatants);
 
@@ -38,7 +36,7 @@ public class BattleEngine {
 
             // Check if stunned (stun skips turn)
             if (current.isStunned()) {
-                ui.displayMessage(current.getName() + " is STUNNED - turn skipped.");
+            GameUI.displayMessage(current.getName() + " is STUNNED - turn skipped.");
                 continue;
             }
 
@@ -73,7 +71,7 @@ public class BattleEngine {
 
         if (aliveEnemies.isEmpty() && level.hasBackupSpawn()) {
             List<Enemy> backup = level.triggerBackupSpawn();
-            ui.displayMessage("BEWARE! Backup enemies have spawned!");
+            GameUI.displayMessage("BEWARE! Backup enemies have spawned!");
             combatants.addAll(backup);
         }
 
