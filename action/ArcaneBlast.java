@@ -1,6 +1,7 @@
 package action;
 
 import combatant.Combatant;
+import combatant.Player;
 import effect.ArcaneBlastEffect;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class ArcaneBlast implements SpecialSkill
 
     @Override
     public void execute(Combatant user, List<Combatant> targets) {
+        Player userPlayer = (Player) user;
         for (Combatant target : targets) {
             if (!target.isDefeated()) {
                 int dmg = Math.max(0, user.getAttack() - target.getDefense());
@@ -28,6 +30,7 @@ public class ArcaneBlast implements SpecialSkill
         }
         totalBonusApplied = enemyKilled * ATK_BONUS_PER_KILL;
         user.addStatusEffect(new ArcaneBlastEffect(totalBonusApplied));
+        userPlayer.setSpecialSkillCooldown(3);
     }
 
     @Override
