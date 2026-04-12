@@ -18,7 +18,7 @@ public class ShieldBash implements SpecialSkill {
         int dmg = Math.max(0, user.getAttack() - target.getDefense());
         target.takeDamage(dmg);
         target.addStatusEffect(new StunEffect(2));
-        userPlayer.setSpecialSkillCooldown(4);
+        userPlayer.setSpecialSkillCooldown(3);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ArcaneBlast implements SpecialSkill
         }
         totalBonusApplied = enemyKilled * ATK_BONUS_PER_KILL;
         user.addStatusEffect(new ArcaneBlastEffect(totalBonusApplied));
-        userPlayer.setSpecialSkillCooldown(4);
+        userPlayer.setSpecialSkillCooldown(3);
     }
 
     @Override
