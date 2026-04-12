@@ -98,6 +98,7 @@ public abstract class Combatant
 
     public void addStatusEffect(StatusEffect effect) {
         statusEffects.add(effect);
+        effect.apply(this);
     }
 
     public void removeStatusEffect(StatusEffect effect) {

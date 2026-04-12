@@ -24,7 +24,7 @@ public class ArcaneBlast implements SpecialSkill
                 int dmg = Math.max(0, user.getAttack() - target.getDefense());
                 target.takeDamage(dmg);
                 if (target.isDefeated()) {
-                    enemyKilled += 1;
+                    enemyKilled++;
                 }
             }
         }
