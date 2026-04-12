@@ -1,6 +1,7 @@
 package action;
 
 import combatant.Combatant;
+import combatant.Player;
 import effect.StunEffect;
 import java.util.List;
 
@@ -12,11 +13,12 @@ public class ShieldBash implements SpecialSkill {
 
     @Override
     public void execute(Combatant user, List<Combatant> targets) {
+        Player userPlayer = (Player) user;
         Combatant target = targets.getFirst();
         int dmg = Math.max(0, user.getAttack() - target.getDefense());
         target.takeDamage(dmg);
         target.addStatusEffect(new StunEffect(2));
-        user.setSpecialSkillsCooldown(3);
+        userPlayer.setSpecialSkillCooldown(3);
     }
 
     @Override

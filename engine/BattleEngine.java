@@ -47,7 +47,7 @@ public class BattleEngine {
                     Action action = ActionMenu.showActionMenu(p, aliveEnemies);
                     action.execute(p, aliveEnemies);
                     if (p.getSpecialSkillCooldown() > 0) {
-                        p.decrementSpecialSkillsCooldown();
+                        p.decrementSpecialSkillCooldown();
                     }
                 }
                 case Enemy e -> {

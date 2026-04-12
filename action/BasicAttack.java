@@ -1,7 +1,7 @@
 package action;
 
 import combatant.Combatant;
-
+import effect.SmokeBombEffect;
 import java.util.List;
 
 public class BasicAttack implements Action {
@@ -9,7 +9,7 @@ public class BasicAttack implements Action {
     public void execute(Combatant user, List<Combatant> targets) {
         Combatant target = targets.getFirst();
 
-        if (!target.isInvulnerable()) {
+        if (!target.hasStatusEffect(SmokeBombEffect.class)) {
             int dmg = Math.max(0, user.getAttack() - target.getDefense());
             System.out.println(user.getName() + " attacks " + target.getName()
                     + "! Damage: " + user.getAttack() + " - "

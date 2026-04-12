@@ -38,14 +38,14 @@ public abstract class Player extends Combatant implements Describable
     public final void useSpecialSkillWithCD(List<Combatant> targets) {
         if (getSpecialSkillCooldown() == 0) {
             useSpecialSkill(targets);
-            setSpecialSkillsCooldown(3);
+            setSpecialSkillCooldown(3);
         }
     }
 
     public final void useSpecialSkillWithoutCD(List<Combatant> targets) {
         int cooldown = getSpecialSkillCooldown();
         useSpecialSkill(targets);
-        setSpecialSkillsCooldown(cooldown);
+        setSpecialSkillCooldown(cooldown);
     }
 
     private void useSpecialSkill(List<Combatant> targets) {
@@ -60,11 +60,11 @@ public abstract class Player extends Combatant implements Describable
         return specialSkillCooldown;
     }
 
-    public void setSpecialSkillsCooldown(int cooldown) {
+    public void setSpecialSkillCooldown(int cooldown) {
         specialSkillCooldown = cooldown;
     }
 
-    public void decrementSpecialSkillsCooldown() {
+    public void decrementSpecialSkillCooldown() {
         specialSkillCooldown -= 1;
     }
 
