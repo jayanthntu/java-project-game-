@@ -21,7 +21,7 @@ public class ActionMenu {
             System.out.print("3. ");
         }
 
-        boolean skillReady = player.getSpecialSkillsCooldown() == 0;
+        boolean skillReady = player.getSpecialSkillCooldown() == 0;
 
 
         System.out.print("Special Skill");
@@ -29,7 +29,7 @@ public class ActionMenu {
             System.out.println(" (Ready!)");
         } 
         else {
-            System.out.println(" (Cooldown: " + player.getSpecialSkillsCooldown() + " turns)");
+            System.out.println(" (Cooldown: " + player.getSpecialSkillCooldown() + " turns)");
         }
 
         int choice = InputHandler.getPlayerInput(hasItems ? 4 : 3);
@@ -58,7 +58,7 @@ public class ActionMenu {
                         System.out.println(player.getSpecialSkill().getName()+ " activated!");
                         yield player.getSpecialSkill();
                     } else {
-                        System.out.println("Special skill is on cooldown (" + player.getSpecialSkillsCooldown() + " turns remaining). Using Basic Attack instead.");
+                        System.out.println("Special skill is on cooldown (" + player.getSpecialSkillCooldown() + " turns remaining). Using Basic Attack instead.");
                         yield fallback(player, aliveEnemies);
                     }
                 }
@@ -84,7 +84,7 @@ public class ActionMenu {
                         System.out.println(specialSkill.getName() + " activated!");
                         yield specialSkill;
                     } else {
-                        System.out.println("Special skill is on cooldown (" + player.getSpecialSkillsCooldown() + " turns remaining). Using Basic Attack instead.");
+                        System.out.println("Special skill is on cooldown (" + player.getSpecialSkillCooldown() + " turns remaining). Using Basic Attack instead.");
                         yield fallback(player, aliveEnemies);
                     }
                 }
