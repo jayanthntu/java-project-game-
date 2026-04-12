@@ -41,7 +41,7 @@ public class GameUI {
     }
 
     public static void showDifficulty(Difficulty difficulty) {
-        System.out.println("Difficulty Level: " + difficulty);
+        System.out.println("Difficulty Level: " + difficulty.getName());
     }
 
     public static void showSelectedPlayer(Player player) {
