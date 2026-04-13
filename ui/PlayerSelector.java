@@ -12,6 +12,11 @@ public class PlayerSelector {
         System.out.println();
         int choice = InputHandler.getPlayerInput(3);
 
-        return availablePlayers.get(choice - 1);
+        Player selectedPlayer = availablePlayers.get(choice - 1);
+
+        if (selectedPlayer instanceof CustomPlayer)
+            selectedPlayer = PlayerFactory.createCustomPlayer();
+
+        return selectedPlayer;
     }
 }

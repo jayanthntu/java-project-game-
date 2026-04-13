@@ -16,4 +16,6 @@ public abstract class Enemy extends Combatant
         ActionStrategy action = new ActionStrategy();
         return action.selectAction();
     }
+
+    public abstract Enemy copy();
 } 

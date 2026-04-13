@@ -6,8 +6,8 @@ import java.util.List;
 public class Easy implements Difficulty {
     private static final String NAME = "Easy";
     private static final String DESCRIPTION = "3 Goblins";
-    private static final List<Enemy> initialSpawn = List.of(new Goblin("Goblin A"), new Goblin("Goblin B"), new Goblin("Goblin C"));
-    private static final List<Enemy> backupSpawn = List.of();
+    private final List<Enemy> initialSpawn = List.of(new Goblin("Goblin A"), new Goblin("Goblin B"), new Goblin("Goblin C"));
+    private final List<Enemy> backupSpawn = List.of();
 
     @Override
     public String getName() {
@@ -27,5 +27,10 @@ public class Easy implements Difficulty {
     @Override
     public List<Enemy> getBackupSpawn() {
         return backupSpawn;
+    }
+
+    @Override
+    public Difficulty copy() {
+        return new Easy();
     }
 }

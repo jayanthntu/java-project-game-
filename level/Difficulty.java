@@ -7,4 +7,5 @@ import java.util.List;
 public interface Difficulty extends Describable {
     List<Enemy> getInitialSpawn();
     List<Enemy> getBackupSpawn();
+    Difficulty copy();
 }

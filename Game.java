@@ -1,41 +1,28 @@
-import combatant.CustomPlayer;
 import combatant.*;
 import engine.BattleEngine;
 import level.*;
 import ui.*;
 
-import java.util.List;
-
 public class Game {
     private Level currentLevel;
-    private Level currentLevelBackup;
     private BattleEngine engine;
-    private Player player;
+    private Difficulty difficultyBackup;
     private Player playerBackup;
 
     public void start() {
         GameUI.displayMessage("=== TURN-BASED COMBAT ARENA ===");
 
-        player = PlayerSelector.selectPlayer();
-        if (player instanceof CustomPlayer)
-            player = PlayerFactory.createCustomPlayer();
+        playerBackup = PlayerSelector.selectPlayer();
+        Player player = playerBackup.copy();
 
-        playerBackup = player.copy();
         GameUI.showSelectedPlayer(player);
-
         ItemSelector.selectItems(player);
 
-        Difficulty difficulty = DifficultySelector.selectDifficulty();
-        GameUI.showDifficulty(difficulty);
+        difficultyBackup = DifficultySelector.selectDifficulty();
+        Difficulty difficulty = difficultyBackup.copy();
 
-        if (difficulty instanceof Custom) {
-            List<Integer> customLevelSettings = CustomLevelFactory.createCustomLevel();
-            currentLevel = LevelFactory.createCustom(customLevelSettings);
-            currentLevelBackup = LevelFactory.createCustom(customLevelSettings);
-        } else {
-            currentLevel = LevelFactory.create(difficulty);
-            currentLevelBackup = LevelFactory.create(difficulty);
-        }
+        GameUI.showDifficulty(difficulty);
+        currentLevel = LevelFactory.create(difficulty);
 
         engine = new BattleEngine(player, currentLevel);
         runGame();
@@ -55,9 +42,15 @@ public class Game {
         
         switch (choice) {
             case 1 -> {
-                player = playerBackup.copy();
+                Player player = playerBackup.copy();
+                GameUI.showSelectedPlayer(player);
                 ItemSelector.selectItems(player);
-                engine = new BattleEngine(player, currentLevelBackup);
+
+                Difficulty difficulty = difficultyBackup.copy();
+                GameUI.showDifficulty(difficulty);
+                currentLevel = LevelFactory.create(difficulty);
+
+                engine = new BattleEngine(player, currentLevel);
                 runGame();
             }
             case 2 -> start();

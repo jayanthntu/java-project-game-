@@ -6,4 +6,9 @@ public class Wolf extends Enemy
     {
         super(name, 40, 40, 45, 5, 35);
     }
+
+    @Override
+    public Enemy copy() {
+        return new Wolf(super.getName());
+    }
 }
