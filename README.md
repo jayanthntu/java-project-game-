@@ -1,3 +1,3 @@
-# java-project-game-
+SC2002 TURN BASED ARENA COMBAT ARENA
 
-### Hi this is a readme file
+- To start the program, run main.class
